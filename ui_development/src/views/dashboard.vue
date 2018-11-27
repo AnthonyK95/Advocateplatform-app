@@ -5,9 +5,10 @@
         <div class="notificationImage"></div>
         <div class="sub-container">
         <ul class="main">
-            <li class="left" @click="logout()">My Devices</li>
-            <li class="right"><div class="userImage"></div></li>
+            <li class="left"  @click="logout()">My Devices</li>
+            <li class="right" @click="changeModal('settings')"><div class="userImage"></div></li>
             <li class="right"><div id="notificationImage" class="notificationImage"></div></li>
+            <li class="right"><div id="addDevice" class="addDevice"></div></li>
             <li class="right"><input type="text" class="search" placeholder="Search Device"/></li>
         </ul>
         </div>
@@ -19,18 +20,17 @@
             <a>Settings</a>
             <a @click="logout()">Logout</a>
         </div>
-
-        <!-- Listing Devices  -->
+        <!-- Listing Devices hybrid-->
         <div id="devices">
             <ul>
                  <li v-if="devices" :key="devices._id" v-for="devices in devices">
                     <h3>{{devices.deviceName}}</h3><br>
                     <h4>127.0.0.1</h4>
+                    <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2>
                  </li>
             </ul>
         </div>
-
-
+    <component @keydown.esc="closeModal(false)" @closeTheModal='closeModal(false)' v-if="status == true" :props="props" v-bind:is="modalComponent"/>
    </div>
 </template>
 
@@ -155,6 +155,9 @@ nav ul{display: none;}
     position: relative;;
 }
 
+.addDevice{
+    display: none;
+}
 
 /*----------------------Desktop Version*/
 @media only screen and (min-width: 1200px) {
@@ -178,7 +181,7 @@ nav .main .left{
     font-size: 25px;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    margin-top: 1.80em;
+    margin-top: 2.00em;
 }
 nav .main .right{
     float: right;
@@ -213,10 +216,10 @@ nav .main .right{
 }
 
 .search{
-  margin-top: 0.2em;
+  margin-top: 0.25em;
   float: right;
   width: 14em;
-  height: 35px;
+  height: 39px;
   border-radius: 5px;
   padding-left: 45px;
   padding-top: 1px;
@@ -271,6 +274,29 @@ nav .main .right{
     margin-left: 1em;
     position:absolute;
 }
+
+.addDevice{
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-top: 0.3em;
+    background-image: url(../assets/Icon/add.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color:transparent; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 </style>
@@ -280,15 +306,28 @@ nav .main .right{
 <script>
 import axios from 'axios';
 import store from '../store/store'
+import settings from '../components/settings'
+
 axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
     data(){
         return{
-            devices:''
+            devices:'',
+            status:false,
+            modalComponent:'',
+            props:''
         }
     },
    methods:{
-         logout:function(){
+        changeModal(template,props){
+            if(template == 'settings'){this.modalComponent = settings;this.status=true}    
+            if(template == 'deviceProperties'){console.log('deviceProperties')}
+        },
+        // Closing the modal -> action
+        closeModal:function(variable){
+            this.status = variable;
+         },
+        logout:function(){
          localStorage.removeItem('token');
          store.commit('logoutUser');
          this.$router.push({ name: 'landing' });
@@ -330,9 +369,10 @@ export default {
          },
        
     },
-    mounted(){this.requestDevices()},
+    mounted(){this.requestDevices();},
        created(){
         this.dashboardValidation();
+       
     },
 }
 </script>
