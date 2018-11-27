@@ -7,7 +7,7 @@
         <ul class="main">
             <li class="left">My Devices</li>
             <li class="right"><div class="userImage"></div></li>
-            <li class="right"><div class="notificationImage"></div></li>
+            <li class="right"><div id="notificationImage" class="notificationImage"></div></li>
             <li class="right"><input type="text" class="search" placeholder="Search Device"/></li>
         </ul>
         </div>
@@ -61,9 +61,6 @@ nav ul{display: none;}
     outline:none;
     background-image: url(../assets/Icon/bell.svg);
 }
-
-
-
 .navbar{
     height: 100%;
     width: 0;
@@ -130,7 +127,9 @@ nav .main .right{
 .search{
     width: 200px;
 }
-.notificationImage{
+.notificationImage{display: none;}
+#notificationImage{
+  display: block;
   width: 35px;
   height: 35px;
   margin-top: 0.2em;
@@ -142,7 +141,6 @@ nav .main .right{
   background-size: cover;
   background-image: url(../assets/Icon/bell.svg);
 }
-
 .userImage{
   width: 40px;
   height: 40px;
