@@ -76,6 +76,53 @@ export default {
 
 .container{
     width: 100%;
+    margin:auto;
+}
+
+#box{
+    width: 100%;
+    margin:auto;
+}
+
+#box form{
+    text-align:center;
+    margin-top: 13em;
+    width: 100%;
+}
+form [type = "email"]{
+    width: 90vw;
+    padding-left:20px;
+    height: 60px;
+    border:1px solid #0066FF;
+    border-radius: 5px;
+    outline:none;
+}
+
+form [type = "password"]{
+    width: 90vw;
+    padding-left:20px;
+    margin-top: 2em;
+    height: 60px;
+     border:1px solid #0066FF;
+    border-radius: 5px;
+    outline:none;
+}
+form [type = "submit"]{
+    width: 96vw;
+    /* padding-left:20px; */
+    margin-top: 2em;
+    height: 60px;
+    background-color: #0066FF;
+    text-align: center;
+    border:none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 1200px) {
+.container{
+    width: 100%;
     height: 100vh;
     margin: auto;
     background-color: #eff2f7;
@@ -143,5 +190,5 @@ form [type = "submit"]{
 form [type = "submit"]:hover{
     width: 220px;
 }
-
+}
 </style>
