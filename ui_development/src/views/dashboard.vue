@@ -24,7 +24,8 @@
         <div id="devices">
             <ul>
                  <li v-if="devices" :key="devices._id" v-for="devices in devices">
-``                      <h3>{{devices.deviceName}}</h3>
+                    <h3>{{devices.deviceName}}</h3><br>
+                    <h4>127.0.0.1</h4>
                  </li>
             </ul>
         </div>
@@ -250,13 +251,16 @@ nav .main .right{
 #devices ul li h3{
     color: white;
     text-align: center;
-    position: relative;
-    margin-left: -6em;margin-top: 1em;
+    position: absolute;
+    margin-left: 1em;margin-top: 1em;
 }
 
-
+#devices ul li h4{
+    margin-top: 8em;
+    margin-left: 1em;
+    position:absolute;
 }
-
+}
 
 </style>
 
@@ -288,7 +292,6 @@ export default {
         requestDevices:function(){
             axios.post('http://localhost:10001/api/devices',localStorage.getItem('token'))
             .then(response => {
-                console.log(response)
                this.devices = response.data.response;
             })
             .catch(error => {
