@@ -287,7 +287,7 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
     Contract.find({assignedUser:req.userID},(err,response)=>{
-        res.status(200).json({})
+        res.status(200).json({});
     });
 });
 
