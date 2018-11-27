@@ -82,7 +82,6 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
         if(error){
             console.log(error);
         }
-        console.log(user_data)
         res.status(200).json({message:user_data.username});
     });
 });

@@ -1,13 +1,11 @@
 <template>
     <div class="container" id="container">
-        <h1>Settings</h1>
-        
+        <h1>Device Properties</h1>
     </div>
 </template>
-
 <style scoped>
 .container{
-   text-align: center;
+    text-align: center;
     position: fixed;
     left:22%;
     padding-bottom:100px;
@@ -25,7 +23,9 @@
     z-index: 777;
     margin:auto;
 }
+
 </style>
+
 <script>
 export default {
      mounted(){

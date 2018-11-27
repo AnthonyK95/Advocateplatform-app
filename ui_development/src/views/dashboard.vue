@@ -22,13 +22,15 @@
         </div>
         <!-- Listing Devices hybrid-->
         <div id="devices">
-            <ul>
-                 <li v-if="devices" :key="devices._id" v-for="devices in devices">
-                    <h3>{{devices.deviceName}}</h3><br>
-                    <h4>127.0.0.1</h4>
-                    <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2>
-                 </li>
-            </ul>
+            <div class="inside-container">
+                <ul>
+                    <li @click="changeModal('deviceProperties')" v-if="devices" :key="devices._id" v-for="devices in devices">
+                        <h3>{{devices.deviceName}}</h3><br>
+                        <h4>127.0.0.1</h4>
+                        <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2>
+                    </li>
+                </ul>
+            </div>
         </div>
     <component @keydown.esc="closeModal(false)" @closeTheModal='closeModal(false)' v-if="status == true" :props="props" v-bind:is="modalComponent"/>
    </div>
@@ -165,6 +167,11 @@ nav ul{display: none;}
 nav{
  width: 100%;
  height: 80px;
+}
+/*Minimize the length of the outer-container*/ 
+.inside-container{
+    width: 90%;
+    margin:auto;
 }
 nav .main{
     display: block;
@@ -307,6 +314,7 @@ nav .main .right{
 import axios from 'axios';
 import store from '../store/store'
 import settings from '../components/settings'
+import device_properties from '../components/device_properties'
 
 axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
@@ -320,8 +328,8 @@ export default {
     },
    methods:{
         changeModal(template,props){
-            if(template == 'settings'){this.modalComponent = settings;this.status=true}    
-            if(template == 'deviceProperties'){console.log('deviceProperties')}
+            if(template == 'settings'){this.modalComponent = settings;this.status=true;}    
+            if(template == 'deviceProperties'){this.modalComponent = device_properties;this.status = true;}
         },
         // Closing the modal -> action
         closeModal:function(variable){
