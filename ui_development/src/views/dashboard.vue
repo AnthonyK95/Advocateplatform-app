@@ -48,6 +48,8 @@ nav{
     height: 63px;
     position: fixed;
     z-index: 777;
+    background-color: white;
+    
 }
 nav img{
     float: left;
@@ -110,39 +112,48 @@ nav ul{display: none;}
 #devices{
   width: 100%;
   margin:auto;
-  margin-top: 10em;
+  margin-top: 12em;
   margin-bottom: 5em;
 }
 #devices ul{
   width: 100%;
   text-align: center;
   list-style: none;
-  margin-top: -20px;
+  margin-top: -8em;
+  margin-left: -2.10em;
+  display: block;
 }
 #devices ul li{
   display: inline-block;
-  margin-top: 100px;
+  margin-top: 20px;
   margin-left: 50px;
   cursor: pointer;
   font-family: 'PT Sans', sans-serif;
   font-weight: bold;
   font-stretch: extra-condensed;
   height: 180px;
-  width: 250px;
+  width: 360px;
   background-color:#2741C8;
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
 }
 
+
 #devices ul li h3{
     color: white;
+    float: left;
     text-align: center;
     position: relative;
-    margin-left: -6em;margin-top: 1em;
+    margin-left: 1em;
+    margin-top: 1em;
 }
 
-
+#devices ul li h4{
+    margin-top: 8em;
+    margin-left: -16em;
+    position: relative;;
+}
 
 
 /*----------------------Desktop Version*/
@@ -290,8 +301,9 @@ export default {
         },
         // Requesting data from the server
         requestDevices:function(){
-            axios.post('http://localhost:10001/api/devices',localStorage.getItem('token'))
+            axios.post('http://46.103.120.51:10001/api/devices',localStorage.getItem('token'))
             .then(response => {
+                console.log(response)
                this.devices = response.data.response;
             })
             .catch(error => {
