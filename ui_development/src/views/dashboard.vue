@@ -280,7 +280,7 @@ nav .main .right{
 <script>
 import axios from 'axios';
 import store from '../store/store'
- axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
+axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
     data(){
         return{
@@ -288,7 +288,7 @@ export default {
         }
     },
    methods:{
-        logout:function(){
+         logout:function(){
          localStorage.removeItem('token');
          store.commit('logoutUser');
          this.$router.push({ name: 'landing' });
@@ -330,8 +330,8 @@ export default {
          },
        
     },
+    mounted(){this.requestDevices()},
        created(){
-        this.requestDevices();
         this.dashboardValidation();
     },
 }

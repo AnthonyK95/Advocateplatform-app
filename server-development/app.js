@@ -3,9 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const crypto = require('crypto');
-
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const requested_token = require('./modules/Token_creation');
@@ -92,7 +90,7 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
 // FIXME: Sending back the devices ->Working Great
 app.use('/api/devices',Token_authentication,(req,res)=>{
     //Sending the list of devices
-     Device.find({assignedUser:req.userID},(err,data)=>{
+      Device.find({assignedUser:req.userID},(err,data)=>{
         res.status(200).json({response:data});
     });
 });
