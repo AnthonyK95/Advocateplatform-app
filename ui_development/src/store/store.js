@@ -7,7 +7,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
-
   },
 
   mutations: {

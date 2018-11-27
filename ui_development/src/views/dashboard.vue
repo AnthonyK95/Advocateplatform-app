@@ -202,6 +202,7 @@ export default {
     },
     created(){
         this.requestDevices();
+        this.dashboardValidation();
     },
     methods:{
         logout:function(){
@@ -215,11 +216,34 @@ export default {
         closeNavigation:function(){
             let menu = document.getElementById('navbar').style.width = '0';
         },
+         dashboardValidation:function(){
+          axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
+            axios.post('http://46.103.120.51:10000/api/validation',localStorage.getItem('token'))
+            .then(response => {
+                if(response.data == "Expired"){
+                    console.log('Token has been expired');
+                    this.$router.push({name:'login'});
+                    store.commit('logoutUser');
+                    localStorage.removeItem('token');
+                }
+                else{
+                    store.commit('loginUser');
+                    // Setting default view
+                    this.active_component = localStorage.getItem('template');
+                    // Settting the profile preferences
+                    this.userProfile = response.data.message
+                    // Activating tyle property
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+         },
         // Requesting data from the server
         requestDevices:function(){
-            axios.post('http://46.103.120.51:10000/api/devices',localStorage.getItem('token'))
+            axios.post('http://localhost:10000/api/devices',localStorage.getItem('token'))
             .then(response => {
-                 console.log(response)
+                 console.log(response.data);
             })
             .catch(error => {
                 console.log(error);
