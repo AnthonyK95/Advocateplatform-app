@@ -44,7 +44,7 @@ let router =  new Router({
 })
 
 // Define the routes that not require authentication
-const allowedRoutes = ['login','register','landing','company','dashboard']
+const allowedRoutes = ['login','register','landing','company']
 router.beforeEach((to, from, next) => {
 
 

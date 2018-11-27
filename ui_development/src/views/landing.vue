@@ -6,7 +6,6 @@
                 <li>About</li>
                 <router-link to='/login'><li>Login</li></router-link>
             </ul>
-            <img src="../assets/Icon/databaseWrite.svg" width="40">
         </div><br>
         <div id="header">
            <h1>Advocate Platform</h1>

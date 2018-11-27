@@ -5,7 +5,7 @@
         <div class="notificationImage"></div>
         <div class="sub-container">
         <ul class="main">
-            <li class="left">My Devices</li>
+            <li class="left" @click="logout()">My Devices</li>
             <li class="right"><div class="userImage"></div></li>
             <li class="right"><div id="notificationImage" class="notificationImage"></div></li>
             <li class="right"><input type="text" class="search" placeholder="Search Device"/></li>
@@ -19,6 +19,17 @@
             <a>Settings</a>
             <a @click="logout()">Logout</a>
         </div>
+
+        <!-- Listing Devices  -->
+        <div id="devices">
+            <ul>
+                 <li v-if="devices" :key="devices._id" v-for="devices in devices">
+                      <h3>{{devices.deviceName}}</h3>
+                 </li>
+            </ul>
+        </div>
+
+
    </div>
 </template>
 
@@ -117,7 +128,7 @@ nav .main .left{
     font-size: 25px;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    margin-top: 1.75em;
+    margin-top: 1.80em;
 }
 nav .main .right{
     float: right;
@@ -147,6 +158,7 @@ nav .main .right{
   margin-top: 0em;
   border-radius: 20px;
   /* background-color: #000; */
+  margin-left: -1.1em;
   background-image: url(../assets/Icon/profile.svg);
 }
 
@@ -164,7 +176,7 @@ nav .main .right{
   /* border:1px solid lightgrey; */
   color:#2741C8;
   background-image: url(../assets/Icon/search.svg);
-  background-position: 15px 7.5px;
+  background-position: 12px 7px;
   background-size:small;
   background-repeat: no-repeat;
 }
@@ -180,19 +192,39 @@ nav .main .right{
 
 
 <script>
+import axios from 'axios';
+import store from '../store/store'
 export default {
     data(){
         return{
-
+            devices:''
         }
     },
+    created(){
+        this.requestDevices();
+    },
     methods:{
+        logout:function(){
+         localStorage.removeItem('token');
+         store.commit('logoutUser');
+         this.$router.push({ name: 'landing' });
+        },
         openNavigation:function(){
             let menu = document.getElementById('navbar').style.width = '101%';
         },
         closeNavigation:function(){
             let menu = document.getElementById('navbar').style.width = '0';
         },
+        // Requesting data from the server
+        requestDevices:function(){
+            axios.post('http://46.103.120.51:10000/api/devices',localStorage.getItem('token'))
+            .then(response => {
+                 console.log(response)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
     }
 }
 </script>

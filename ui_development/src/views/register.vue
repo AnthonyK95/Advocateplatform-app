@@ -1,79 +1,55 @@
 <template>
     <div class="container">
-       <div id="box">
-            <form @submit.prevent="login">
-                <input type="email" v-model="data.email" label="email" autocomplete="off" placeholder="Email Address" required><br>
-                <input type="password" v-model="data.password" label="password" placeholder="Password" required><br>
-                <input type="submit" value="Login">
-            </form>
-        </div>
-    </div>
+            <div id="box">
+                <form @submit.prevent="postdb">
+                    <input type="email" v-model="data.email" label="email" autocomplete="off" placeholder="Email Address" required><br>
+                    <input type="text" v-model="data.username" label="username" autocomplete="off" placeholder="Username" required><br>
+                    <input type="password" v-model="data.password" label="password" placeholder="Password" required><br>
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+    </div>       
 </template>
+
 
 
 
 <script>
 import axios from 'axios'
-import vuex from 'vuex'
 import store from '../store/store'
-
 export default {
    data(){
        return{
           data:{
               email:'',
+              username:'',
               password:''
           }
         }   
    },
-   methods:{
-    login:function(){
-        let credentials = {
+    methods:{
+       postdb:function(){
+          let credentials = {
               email: this.data.email,
+              username:this.data.username,
               password:this.data.password
           }
-          axios.post('http://localhost:10000/api/login',credentials)
-          .then(response => {
-              if(response.data == 'Authentication Failed'){
-                  //activate the notifications system of the platform
-                  console.log('Authentication Failed')
-                
-              } 
-             else{
-                store.commit('loginUser')
-                localStorage.setItem('token',response.data)
-                this.$router.push({name:'dashboard'})
-             }              
+          axios.post('http://46.103.120.51:10000/api/register',credentials)
+          .then(response=>{
+             store.commit('loginUser')
+             localStorage.setItem('token',response.data)
+             this.$router.push({name:'dashboard'})
           })
-          .catch(error => {
-              console.log(error)
-          })
-         },
-    // Checks if the user has an active token and session
-    alreadyLogin:function(){
-        if(store.state.isLoggedIn == true && localStorage.getItem('token')){
-            this.$router.push({name:'dashboard'})
-            }
-            else{
-                // Send notification to the user for credentials
-                console.log('Please Login')
-            }
-        },
-       
-    },
-     created(){
-            this.alreadyLogin()
-        }
-}
+          .catch(err => console.log(err));
+       }
+   },
+ }
 </script>
 
 
 
-
-
-<!--Style -->
+<!-- Style --> 
 <style scoped>
-
 .container{
     width: 100%;
     height: 100vh;
@@ -97,10 +73,9 @@ form{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
 }
-
-form [type = "email"]{
+form [type = "text"]{
     width: 200px;
-    margin-top: 30px;
+    margin-top: 20px;
     height: 30px;
     border:1px solid lightgrey;
     border-radius: 5px;
@@ -108,9 +83,9 @@ form [type = "email"]{
     background-color: white;
     box-shadow: 0 0 2px 0 lightgray;
 }
-form [type = "text"]{
+form [type = "email"]{
     width: 200px;
-    margin-top: 20px;
+    margin-top: 30px;
     height: 30px;
     border:1px solid lightgrey;
     border-radius: 5px;
@@ -143,5 +118,5 @@ form [type = "submit"]{
 form [type = "submit"]:hover{
     width: 220px;
 }
-
 </style>
+
