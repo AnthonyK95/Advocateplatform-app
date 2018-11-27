@@ -5,7 +5,9 @@
                 <input type="email" v-model="data.email" label="email" autocomplete="off" placeholder="Email Address" required><br>
                 <input type="password" v-model="data.password" label="password" placeholder="Password" required><br>
                 <input type="submit" value="Login">
+                <h3>Don't have an account?<router-link to="/register" style="margin-left:0.3em;">Create One Now!</router-link></h3>
             </form>
+            
         </div>
     </div>
 </template>
@@ -73,7 +75,8 @@ export default {
 
 <!--Style -->
 <style scoped>
-
+a{text-decoration: none;
+color: #0066FF;}
 .container{
     width: 100%;
     margin:auto;
@@ -82,6 +85,13 @@ export default {
 #box{
     width: 100%;
     margin:auto;
+}
+#box form h3{
+    margin-top: 1em;
+    font-size: 15px;
+    float: left;
+    position: relative;
+    left: 1em;
 }
 
 #box form{
@@ -123,30 +133,28 @@ form [type = "submit"]{
 @media only screen and (min-width: 1200px) {
 .container{
     width: 100%;
-    height: 100vh;
     margin: auto;
-    background-color: #eff2f7;
 }
 #box{
     width: 100%;
-    /* margin-top: 10px; */
-    padding-top: 10em;
+    text-align: center;
+    margin-top: 13em;
 }
-form{
+#box form{
     text-align: center;
     margin-top: 100px;
-    padding-top: 50px;
+    padding-top: 40px;
     width: 400px;
     margin-top: 100px;
     padding-bottom: 50px;
     margin:auto;
     border-radius: 10px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
     background-color: white;
 }
 
-form [type = "email"]{
-    width: 200px;
+#box form [type = "email"]{
+    width: 300px;
     margin-top: 30px;
     height: 30px;
     border:1px solid lightgrey;
@@ -155,18 +163,9 @@ form [type = "email"]{
     background-color: white;
     box-shadow: 0 0 2px 0 lightgray;
 }
-form [type = "text"]{
-    width: 200px;
-    margin-top: 20px;
-    height: 30px;
-    border:1px solid lightgrey;
-    border-radius: 5px;
-    padding:10px;
-    background-color: white;
-    box-shadow: 0 0 2px 0 lightgray;
-}
-form [type = "password"]{
-    width: 200px;
+
+#box form [type = "password"]{
+    width: 300px;
     margin-top: 20px;
     height: 30px;
     border:1px solid lightgrey;
@@ -180,7 +179,7 @@ form [type = "submit"]{
     border:none;
     border-radius: 5px;
     color: white;
-    width: 200px;
+    width: 320px;
     margin-top: 20px;
     cursor: pointer;
     background-color: #0066FF;
@@ -188,7 +187,18 @@ form [type = "submit"]{
     transition: .2s;
 }
 form [type = "submit"]:hover{
-    width: 220px;
+    width: 335px;
 }
+#box form h3{
+    margin-top: 1em;
+    font-size: 15px;
+    float: left;
+    position: relative;
+    left: 2.8em;
+}
+
+
+
+
 }
 </style>

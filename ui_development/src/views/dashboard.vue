@@ -53,8 +53,8 @@ nav{
 }
 nav img{
     float: left;
-    width: 43px;
-    margin-top: 0.65em;
+    width: 44px;
+    margin-top: 0.72em;
     margin-left: 1em;
     cursor: pointer;
 }
@@ -63,7 +63,7 @@ nav ul{display: none;}
     float: right;
     width: 32px;
     height: 32px;
-    margin-top: 1.4em;
+    margin-top: 1.09em;
     margin-right: 1.3em;
     position: relative;
     border-radius: 10px;
@@ -104,9 +104,9 @@ nav ul{display: none;}
 .navbar .closebtn {
     position: absolute;
     top: 0;
-    margin-left: -0.2em;
+    margin-left: -0.1em;
     font-size: 36px;
-    margin-top: 0.05em;
+    margin-top: 0.1em;
 }
 
 #devices{
