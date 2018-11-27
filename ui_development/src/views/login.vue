@@ -32,7 +32,7 @@ export default {
               email: this.data.email,
               password:this.data.password
           }
-          axios.post('http://46.103.120.51:10000/api/login',credentials)
+          axios.post('http://46.103.120.51:10001/api/login',credentials)
           .then(response => {
               if(response.data == 'Authentication Failed'){
                   //activate the notifications system of the platform

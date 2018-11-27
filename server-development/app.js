@@ -84,6 +84,7 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
         if(error){
             console.log(error);
         }
+        console.log(user_data)
         res.status(200).json({message:user_data.username});
     });
 });
@@ -92,7 +93,7 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
 app.use('/api/devices',Token_authentication,(req,res)=>{
     //Sending the list of devices
      Device.find({assignedUser:req.userID},(err,data)=>{
-        res.status(200).json({device:data});
+        res.status(200).json({response:data});
     });
 });
 
@@ -305,6 +306,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 
 // Server Initialization -> Properties Configured by the host.env file
-app.listen(10000, '0.0.0.0',() => console.log('Application is running'));
+app.listen(10001, '0.0.0.0',() => console.log('Application is running'));
 
 module.exports = app;

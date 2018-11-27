@@ -106,6 +106,44 @@ nav ul{display: none;}
     margin-top: 0.05em;
 }
 
+#devices{
+  width: 100%;
+  margin:auto;
+  margin-top: 10em;
+  margin-bottom: 5em;
+}
+#devices ul{
+  width: 100%;
+  text-align: center;
+  list-style: none;
+  margin-top: -20px;
+}
+#devices ul li{
+  display: inline-block;
+  margin-top: 100px;
+  margin-left: 50px;
+  cursor: pointer;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bold;
+  font-stretch: extra-condensed;
+  height: 180px;
+  width: 250px;
+  background-color:#2741C8;
+  border-radius: 6px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  color: white;
+}
+
+#devices ul li h3{
+    color: white;
+    text-align: center;
+    position: relative;
+    margin-left: -6em;margin-top: 1em;
+}
+
+
+
+
 /*----------------------Desktop Version*/
 @media only screen and (min-width: 1200px) {
 .navbar{display: none;} nav img{display: none;} nav .logo{display:none;}.sub-container{width: 70%;text-align: center;margin:auto;}
@@ -184,7 +222,6 @@ nav .main .right{
 #devices{
   width: 100%;
   margin:auto;
-  /* margin-bottom: 150px; */
   margin-top: 10em;
   margin-bottom: 5em;
 }
@@ -192,7 +229,6 @@ nav .main .right{
   width: 100%;
   text-align: center;
   list-style: none;
-  /* margin-left: -65px; */
   margin-top: -20px;
 }
 #devices ul li{
@@ -206,7 +242,6 @@ nav .main .right{
   height: 180px;
   width: 250px;
   background-color:#2741C8;
-  /* border-top: 5px solid rgba(173,190,247,2); */
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
@@ -214,6 +249,9 @@ nav .main .right{
 
 #devices ul li h3{
     color: white;
+    text-align: center;
+    position: relative;
+    margin-left: -6em;margin-top: 1em;
 }
 
 
@@ -227,17 +265,14 @@ nav .main .right{
 <script>
 import axios from 'axios';
 import store from '../store/store'
+ axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
     data(){
         return{
             devices:''
         }
     },
-    created(){
-        this.requestDevices();
-        this.dashboardValidation();
-    },
-    methods:{
+   methods:{
         logout:function(){
          localStorage.removeItem('token');
          store.commit('logoutUser');
@@ -251,9 +286,10 @@ export default {
         },
         // Requesting data from the server
         requestDevices:function(){
-            axios.post('http://localhost:10000/api/devices',localStorage.getItem('token'))
+            axios.post('http://localhost:10001/api/devices',localStorage.getItem('token'))
             .then(response => {
-               this.devices = response.data.device;
+                console.log(response)
+               this.devices = response.data.response;
             })
             .catch(error => {
                 console.log(error);
@@ -261,7 +297,7 @@ export default {
         },
          dashboardValidation:function(){
           axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
-            axios.post('http://46.103.120.51:10000/api/validation',localStorage.getItem('token'))
+            axios.post('http://46.103.120.51:10001/api/validation',localStorage.getItem('token'))
             .then(response => {
                 if(response.data == "Expired"){
                     console.log('Token has been expired');
@@ -277,6 +313,11 @@ export default {
                 console.log(err)
             })
          },
-    }
+       
+    },
+       created(){
+        this.requestDevices();
+        this.dashboardValidation();
+    },
 }
 </script>
