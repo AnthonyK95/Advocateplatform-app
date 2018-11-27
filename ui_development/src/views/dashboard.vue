@@ -181,7 +181,40 @@ nav .main .right{
   background-repeat: no-repeat;
 }
 
+#devices{
+  width: 100%;
+  margin:auto;
+  /* margin-bottom: 150px; */
+  margin-top: 10em;
+  margin-bottom: 5em;
+}
+#devices ul{
+  width: 100%;
+  text-align: center;
+  list-style: none;
+  /* margin-left: -65px; */
+  margin-top: -20px;
+}
+#devices ul li{
+  display: inline-block;
+  margin-top: 100px;
+  margin-left: 50px;
+  cursor: pointer;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bold;
+  font-stretch: extra-condensed;
+  height: 180px;
+  width: 250px;
+  background-color:#2741C8;
+  /* border-top: 5px solid rgba(173,190,247,2); */
+  border-radius: 6px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  color: white;
+}
 
+#devices ul li h3{
+    color: white;
+}
 
 
 }
@@ -216,6 +249,16 @@ export default {
         closeNavigation:function(){
             let menu = document.getElementById('navbar').style.width = '0';
         },
+        // Requesting data from the server
+        requestDevices:function(){
+            axios.post('http://localhost:10000/api/devices',localStorage.getItem('token'))
+            .then(response => {
+               this.devices = response.data.device;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
          dashboardValidation:function(){
           axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
             axios.post('http://46.103.120.51:10000/api/validation',localStorage.getItem('token'))
@@ -228,27 +271,12 @@ export default {
                 }
                 else{
                     store.commit('loginUser');
-                    // Setting default view
-                    this.active_component = localStorage.getItem('template');
-                    // Settting the profile preferences
-                    this.userProfile = response.data.message
-                    // Activating tyle property
                 }
             })
             .catch(err => {
                 console.log(err)
             })
          },
-        // Requesting data from the server
-        requestDevices:function(){
-            axios.post('http://localhost:10000/api/devices',localStorage.getItem('token'))
-            .then(response => {
-                 console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        }
     }
 }
 </script>
