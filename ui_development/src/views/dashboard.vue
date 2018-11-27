@@ -24,7 +24,7 @@
         <div id="devices">
             <ul>
                  <li v-if="devices" :key="devices._id" v-for="devices in devices">
-                      <h3>{{devices.deviceName}}</h3>
+``                      <h3>{{devices.deviceName}}</h3>
                  </li>
             </ul>
         </div>
