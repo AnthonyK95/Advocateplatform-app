@@ -2,7 +2,7 @@
    <div class="container">
        <nav>
         <img src="../assets/Icon/menu.svg" @click="openNavigation()">
-        <div class="logo"></div>
+        <div class="notificationImage"></div>
         <div class="sub-container">
         <ul class="main">
             <li class="left">My Devices</li>
@@ -41,20 +41,29 @@ nav img{
     float: left;
     width: 43px;
     margin-top: 0.65em;
-    margin-left: 0.8em;
+    margin-left: 1em;
     cursor: pointer;
 }
 nav ul{display: none;}
-nav .logo{
-    width: 35px;
-    height: 35px;
-    background-color: black;
+.notificationImage{
     float: right;
-    border-radius: 1000px;
-    margin-right: 1.2em;
-    margin-top: 0.89em;
-    border:none;
+    width: 32px;
+    height: 32px;
+    margin-top: 1.4em;
+    margin-right: 1.3em;
+    position: relative;
+    border-radius: 10px;
+    background-color: transparent;
+    z-index: 0;
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;
+    outline:none;
+    background-image: url(../assets/Icon/bell.svg);
 }
+
+
+
 .navbar{
     height: 100%;
     width: 0;
