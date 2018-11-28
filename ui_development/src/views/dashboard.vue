@@ -417,7 +417,8 @@ nav .main .right{
     background-color:transparent; 
 }
 
-
+.nodevice{margin-left: 0%;}
+.theimg{margin-left:0px;}
 
 
 
