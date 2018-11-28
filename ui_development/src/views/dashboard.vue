@@ -6,9 +6,9 @@
         <div class="sub-container">
         <ul class="main">
             <li class="left"  @click="logout()">My Devices</li>
-            <li class="right" @click="changeModal('settings')"><div class="userImage"></div></li>
+            <li class="right" @click="showModal('settings')"><div class="userImage"></div></li>
             <li class="right"><div id="notificationImage" class="notificationImage"></div></li>
-            <li class="right"><div id="addDevice" class="addDevice"></div></li>
+            <li class="right" @click="showModal('newDevice')"><div id="addDevice" class="addDevice"></div></li>
             <li class="right"><input type="text" class="search" placeholder="Search Device"/></li>
         </ul>
         </div>
@@ -194,7 +194,7 @@ nav .main .left{
     font-size: 25px;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    margin-top: 2.00em;
+    margin-top: 1.8em;
 }
 nav .main .right{
     float: right;
@@ -318,10 +318,12 @@ nav .main .right{
 
 <script>
 import axios from 'axios';
-import store from '../store/store'
-import settings from '../components/settings'
-import devprops from '../components/devprops'
-import modal from '../components/modal'
+import store from '../store/store';
+import settings from '../components/settings';
+import devprops from '../components/devprops';
+import newDevice from '../components/newDevice';
+import modal from '../components/modal';
+
 
 axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
@@ -342,6 +344,7 @@ export default {
        this.isModalVisible = true;
        if(template == 'settings'){this.componentName = settings;}
        if(template == 'devprops'){this.componentName = devprops;this.props = properties;}
+       if(template == 'newDevice'){this.componentName = newDevice;}
     },
     closeModal() {
       this.isModalVisible = false;

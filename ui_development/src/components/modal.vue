@@ -50,7 +50,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.20);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,7 +58,7 @@
 
   .modal {
     background: #FFFFFF;
-    box-shadow: 2px 2px 20px 1px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
     overflow-x: auto;
     width: 60%;
     border-radius: 5px;
