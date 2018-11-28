@@ -90,6 +90,7 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
 app.use('/api/devices',Token_authentication,(req,res)=>{
     //Sending the list of devices
       Device.find({assignedUser:req.userID},(err,data)=>{
+          console.log(data);
         res.status(200).json({response:data});
     });
 });

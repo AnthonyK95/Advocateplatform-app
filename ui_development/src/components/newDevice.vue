@@ -2,9 +2,10 @@
     <div class="container">
        <div id="box">
             <form @submit.prevent="registerDevice">
-                <input type="email" v-model="data.email" label="email" autocomplete="off" placeholder="Email Address" required><br>
-                <input type="password" v-model="data.password" label="password" placeholder="Password" required><br>
-                <input type="submit" value="Regster Device">
+              <input type="text" v-model="data.deviceName" label="name" autocomplete="off" placeholder="Device Name" required><br>
+              <input type="text" v-model="data.deviceType" label="type" autocomplete="off" placeholder="Device Type" required><br>
+              <input type="text" v-model="data.deviceKey" label="password" placeholder="Device Type" required><br>
+              <input type="submit" value="Regster Device">
             </form>
         </div>
     </div>
@@ -17,12 +18,25 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            data:''
+            data:{
+                deviceName:'',
+                deviceType:'',
+                deviceKey:''
+            }
         }
     },
     methods:{
+        
         registerDevice:function(){
-            console.log(this.data);
+            // 
+            let credentials = {deviceNames: this.data.deviceName,deviceTypes:this.data.deviceType,deviceKeys:this.data.deviceKey}
+            axios.post('http://46.103.120.51:1540/api/dashboard/registerDevice',credentials,localStorage.getItem('token'))
+            .then(response => {
+                console.log('success device registration');
+            })
+            .catch(error => {
+                console.log('error on register');
+            })
         },
     }
 }
@@ -57,21 +71,11 @@ color: #0066FF;}
     margin-top: 13em;
     width: 100%;
 }
-form [type = "email"]{
+form [type = "text"]{
     width: 90vw;
     padding-left:20px;
     height: 60px;
     border:1px solid #0066FF;
-    border-radius: 5px;
-    outline:none;
-}
-
-form [type = "password"]{
-    width: 90vw;
-    padding-left:20px;
-    margin-top: 2em;
-    height: 60px;
-     border:1px solid #0066FF;
     border-radius: 5px;
     outline:none;
 }
@@ -112,7 +116,7 @@ form [type = "submit"]{
     background-color: white;
 }
 
-#box form [type = "email"]{
+#box form [type = "text"]{
     width: 300px;
     margin-top: 30px;
     height: 30px;
@@ -123,16 +127,6 @@ form [type = "submit"]{
     box-shadow: 0 0 2px 0 lightgray;
 }
 
-#box form [type = "password"]{
-    width: 300px;
-    margin-top: 20px;
-    height: 30px;
-    border:1px solid lightgrey;
-    border-radius: 5px;
-    padding:10px;
-    background-color: white;
-    box-shadow: 0 0 2px 0 lightgray;
-}
 form [type = "submit"]{
     height: 50px;
     border:none;
