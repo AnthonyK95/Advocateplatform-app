@@ -271,7 +271,7 @@ nav ul{display: none;}
 }
 .theimg{
     /* margin-left: 4em; */
-    margin-left: 15%;
+    margin-left: 16%;
 }
 
 
