@@ -24,7 +24,7 @@
         <div id="devices">
             <div class="inside-container">
                 <ul>
-                    <li @click="changeModal('deviceProperties')" v-if="devices" :key="devices._id" v-for="devices in devices">
+                    <li @click="showModal(),getdevices(devices._id)" v-if="devices" :key="devices._id" v-for="devices in devices">
                         <h3>{{devices.deviceName}}</h3><br>
                         <h4>127.0.0.1</h4>
                         <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2>
@@ -32,8 +32,13 @@
                 </ul>
             </div>
         </div>
-    <component @keydown.esc="closeModal(false)" @closeTheModal='closeModal(false)' v-if="status == true" :props="props" v-bind:is="modalComponent"/>
+        <modal v-show="isModalVisible" @close="closeModal">
+            <div slot="componentName" >
+                <component :props="props" v-bind:is="componentName"></component>
+            </div>
+        </modal>
    </div>
+   
 </template>
 
 <style scoped>
@@ -168,6 +173,7 @@ nav{
  width: 100%;
  height: 80px;
 }
+
 /*Minimize the length of the outer-container*/ 
 .inside-container{
     width: 90%;
@@ -314,73 +320,88 @@ nav .main .right{
 import axios from 'axios';
 import store from '../store/store'
 import settings from '../components/settings'
-import device_properties from '../components/device_properties'
+import device_properties from '../components/devprops'
+import modal from '../components/modal'
 
 axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
 export default {
     data(){
         return{
             devices:'',
-            status:false,
-            modalComponent:'',
+            isModalVisible:false,
+            status:'false',
+            componentName:'',
             props:''
         }
     },
-   methods:{
-        changeModal(template,props){
-            if(template == 'settings'){this.modalComponent = settings;this.status=true;}    
-            if(template == 'deviceProperties'){this.modalComponent = device_properties;this.status = true;}
-        },
-        // Closing the modal -> action
-        closeModal:function(variable){
-            this.status = variable;
-         },
-        logout:function(){
-         localStorage.removeItem('token');
-         store.commit('logoutUser');
-         this.$router.push({ name: 'landing' });
-        },
-        openNavigation:function(){
-            let menu = document.getElementById('navbar').style.width = '101%';
-        },
-        closeNavigation:function(){
-            let menu = document.getElementById('navbar').style.width = '0';
-        },
-        // Requesting data from the server
-        requestDevices:function(){
-            axios.post('http://46.103.120.51:10001/api/devices',localStorage.getItem('token'))
-            .then(response => {
-                console.log(response)
-               this.devices = response.data.response;
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        },
-         dashboardValidation:function(){
-          axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
-            axios.post('http://46.103.120.51:10001/api/validation',localStorage.getItem('token'))
-            .then(response => {
-                if(response.data == "Expired"){
-                    console.log('Token has been expired');
-                    this.$router.push({name:'login'});
-                    store.commit('logoutUser');
-                    localStorage.removeItem('token');
-                }
-                else{
-                    store.commit('loginUser');
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
-         },
-       
+    components:{
+        modal
     },
-    mounted(){this.requestDevices();},
-       created(){
-        this.dashboardValidation();
-       
+   methods:{
+    getdevices:function(request){
+        let deviceID = request
+        axios.post('http://46.103.120.51:10001/api/device/properties',{deviceID},localStorage.getItem('token'))
+       .then(response => {
+           this.deviceProperties = response.data;
+       })
+       .catch(error => {
+           console.log(error);
+       })
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    // Closing the modal -> action
+    thecloseModal:function(variable){
+      this.status = variable;
+    },
+    logout:function(){
+      localStorage.removeItem('token');
+      store.commit('logoutUser');
+      this.$router.push({ name: 'landing' });
+    },
+    openNavigation:function(){
+      let menu = document.getElementById('navbar').style.width = '101%';
+    },
+    closeNavigation:function(){
+      let menu = document.getElementById('navbar').style.width = '0';
+    },
+    // Requesting data from the server
+    requestDevices:function(){
+      axios.post('http://46.103.120.51:10001/api/devices',localStorage.getItem('token'))
+      .then(response => {
+        this.devices = response.data.response;
+    })
+    .catch(error => {
+        console.log(error);
+     })
+    },
+    dashboardValidation:function(){
+      axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
+        axios.post('http://46.103.120.51:10001/api/validation',localStorage.getItem('token'))
+        .then(response => {
+            if(response.data == "Expired"){
+              console.log('Token has been expired');
+              this.$router.push({name:'login'});
+              store.commit('logoutUser');
+              localStorage.removeItem('token');
+            }
+            else{
+              store.commit('loginUser');
+            }
+        })
+        .catch(err => {
+             console.log(err)
+        })
+    },     
+},
+mounted(){this.requestDevices();},
+    created(){
+    this.dashboardValidation();
+    this.getdevices();
     },
 }
 </script>
