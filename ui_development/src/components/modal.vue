@@ -5,8 +5,7 @@
       <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header" id="modalTitle">
           <slot name="header">
-            
-            <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
+            <span class="closebutton" @click="close()">&times;</span>
           </slot>
         </header>
         <section class="modal-body" id="modalDescription">
@@ -74,9 +73,10 @@
   }
 
   .modal-header {
-    border-bottom: 1px solid #eeeeee;
+    /* border-bottom: 1px solid #eeeeee; */
     color: #4AAE9B;
     justify-content: space-between;
+    margin-top: -1em;
   }
 
   
@@ -86,20 +86,19 @@
     padding: 20px 10px;
   }
 
-  .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
+  .closebutton {
+    text-align:center;
+    justify-content: space-between;
+    color: #aaa;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    font-size: 28px;
     font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
-  }
+}
+  .closebutton:hover,
+ .closebutton:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 </style>
