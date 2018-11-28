@@ -24,7 +24,7 @@
         <div id="devices">
             <div class="inside-container">
                 <ul>
-                    <li @click="showModal(),getdevices(devices._id)" v-if="devices" :key="devices._id" v-for="devices in devices">
+                    <li @click="showModal('devprops',devices._id)" v-if="devices" :key="devices._id" v-for="devices in devices">
                         <h3>{{devices.deviceName}}</h3><br>
                         <h4>127.0.0.1</h4>
                         <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2>
@@ -34,7 +34,7 @@
         </div>
         <modal v-show="isModalVisible" @close="closeModal">
             <div slot="componentName" >
-                <component :props="props" v-bind:is="componentName"></component>
+                <component :properties="props" v-bind:is="componentName"></component>
             </div>
         </modal>
    </div>
@@ -320,7 +320,7 @@ nav .main .right{
 import axios from 'axios';
 import store from '../store/store'
 import settings from '../components/settings'
-import device_properties from '../components/devprops'
+import devprops from '../components/devprops'
 import modal from '../components/modal'
 
 axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
@@ -338,18 +338,10 @@ export default {
         modal
     },
    methods:{
-    getdevices:function(request){
-        let deviceID = request
-        axios.post('http://46.103.120.51:10001/api/device/properties',{deviceID},localStorage.getItem('token'))
-       .then(response => {
-           this.deviceProperties = response.data;
-       })
-       .catch(error => {
-           console.log(error);
-       })
-    },
-    showModal() {
-      this.isModalVisible = true;
+    showModal(template,properties) {
+       this.isModalVisible = true;
+       if(template == 'settings'){this.componentName = settings;}
+       if(template == 'devprops'){this.componentName = devprops;this.props = properties;}
     },
     closeModal() {
       this.isModalVisible = false;
@@ -371,7 +363,7 @@ export default {
     },
     // Requesting data from the server
     requestDevices:function(){
-      axios.post('http://46.103.120.51:10001/api/devices',localStorage.getItem('token'))
+      axios.post('http://46.103.120.51:1540/api/devices',localStorage.getItem('token'))
       .then(response => {
         this.devices = response.data.response;
     })
@@ -381,7 +373,7 @@ export default {
     },
     dashboardValidation:function(){
       axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
-        axios.post('http://46.103.120.51:10001/api/validation',localStorage.getItem('token'))
+        axios.post('http://46.103.120.51:1540/api/validation',localStorage.getItem('token'))
         .then(response => {
             if(response.data == "Expired"){
               console.log('Token has been expired');
@@ -401,7 +393,6 @@ export default {
 mounted(){this.requestDevices();},
     created(){
     this.dashboardValidation();
-    this.getdevices();
     },
 }
 </script>

@@ -35,7 +35,7 @@ export default {
               username:this.data.username,
               password:this.data.password
           }
-          axios.post('http://46.103.120.51:10001/api/register',credentials)
+          axios.post('http://46.103.120.51:1540/api/register',credentials)
           .then(response=>{
              store.commit('loginUser')
              localStorage.setItem('token',response.data)

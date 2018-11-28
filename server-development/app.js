@@ -175,6 +175,7 @@ app.use('/api/dashboard/reqcontractConsent',Token_authentication,(req,res)=>{
     })
 })
 
+
 // TODO: create will all the data that we have the confirmed contract
 app.use('/api/dashboard/postcontractConsent',Token_authentication,(req,res)=>{
     let confirmed =  req.body.confirmed
@@ -285,13 +286,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 });
 
 
-app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
-    Contract.find({assignedUser:req.userID},(err,response)=>{
-        res.status(200);
-    });
-});
-
-
 
 
 
@@ -303,6 +297,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 
 // Server Initialization -> Properties Configured by the host.env file
-app.listen(10001, '0.0.0.0',() => console.log('Application is running'));
+app.listen(1540, '0.0.0.0',() => console.log('Application is running'));
 
 module.exports = app;

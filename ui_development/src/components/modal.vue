@@ -26,8 +26,15 @@
             
         }
     },
+    mounted(){this.escModal();},
     methods: {
-      close() {
+      // Closing the menu on escape
+      escModal:function(){
+        document.body.addEventListener('keyup', e => {
+          if (e.keyCode === 27) {this.$emit('close');}
+        })
+      },
+      close:function(){
         this.$emit('close');
       },
     },
