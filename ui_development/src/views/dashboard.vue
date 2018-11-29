@@ -580,8 +580,9 @@ nav .main .right{
     width: 47px;
     position: relative;
     height: 47px;
-    background-color: black;
+    background-image: url(../assets/Icon/profile.svg);
     border-radius: 100px;
+    border:none;
     top:1.25em;
     left: 1.7em; 
 }
@@ -594,6 +595,7 @@ nav .main .right{
     padding-left: 10px;
     padding-top: 15px;
     color: grey;
+    font-weight: normal;
     background-color: #f2f2f2;
     z-index: 777;
 }
