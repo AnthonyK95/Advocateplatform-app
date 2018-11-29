@@ -348,7 +348,7 @@ nav .main li{
     display: inline-flex;
     margin:15px;
     float: left;
-    margin-left: 5em;
+    margin-left: 2em;
     cursor: pointer;
     
 }
@@ -535,24 +535,13 @@ nav .main .right{
     padding-bottom: 1.2em;
     padding-top: 0.7em;
     z-index: 1;
-    right: 15%;
+    right: 7%;
     border-radius: 5px;
     text-align:center;
     overflow-x: hidden;
 }
 .contracts{
     display: block;
-}
-
- .notification_label{
-    width: 100%;
-    height: 50px;
-    background-color: grey;
-    color: white;
-    position: fixed;
-    top:6.7em;
-    left: -0.5em;
-    z-index: 7;
 }
 
 
