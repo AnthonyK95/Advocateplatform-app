@@ -324,6 +324,13 @@ nav ul{display: none;}
 /*----------------------Desktop Version*/
 @media only screen and (min-width: 1200px) {
 .navbar{display: none;} nav img{display: none;} nav .logo{display:none;}.sub-container{width: 70%;text-align: center;margin:auto;}
+
+/*General Elements*/
+/*Disabling the scrolling  */
+::-webkit-scrollbar {
+    width: 0.0em;
+}
+
 nav{
  width: 100%;
  height: 80px;
@@ -565,16 +572,18 @@ nav .main .right{
 #notification-content ul li h2{
     margin-left: 2em;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: normal;
     font-family: 'Open Sans', sans-serif;
     position: relative;
-    top: -1.3em;
+    top: -1.7em;
 }
 #notification-content ul li h3{
     text-align:center;
-    font-size: 15px;
+    font-weight:550;
+    font-size: 13px;
     position: relative;
-    top:-1.0em;
+    top:-1.5em;
     left: 0.8em;
     font-family: 'Open Sans', sans-serif;
 }
@@ -584,7 +593,7 @@ nav .main .right{
     height: 47px;
     background-color: black;
     border-radius: 100px;
-    top:1.35em;
+    top:1.25em;
     left: 1.7em; 
 }
 #notification-content ul h1{
