@@ -20,6 +20,7 @@
          </div>
           <div id="notification-content" @mouseleave="disableDrop()">
               <ul class="contracts">
+                  <h1>Notifications</h1>
                   <li v-for="notify in notification_content" :key="notify._id">
                       <div class="vendorImage"></div><!-- Will show the image of the vendor TODO: -->
                       <h2>{{notify.deviceVendor}} has a contract ready for you</h2>
@@ -346,7 +347,8 @@ nav .main li{
 }
 nav .main .left{
     font-size: 25px;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     margin-top: 1.8em;
 }
@@ -506,7 +508,7 @@ nav .main .right{
   padding-bottom:0.5em;
   margin-bottom: 1.5em;
   font-weight: 700;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12pt;
   color: black;
   cursor: pointer;
@@ -547,7 +549,7 @@ nav .main .right{
 }
 
 
-#notification-content ul{display: block;width: 100%;margin-top: 10px;}
+#notification-content ul{display: block;width: 100%;margin-top: 50px;}
 #notification-content ul li{
     list-style: none;
     width: 100%;
@@ -564,6 +566,7 @@ nav .main .right{
     margin-left: 2em;
     text-align: center;
     font-size: 19px;
+    font-family: 'Open Sans', sans-serif;
     position: relative;
     top: -1.3em;
 }
@@ -573,6 +576,7 @@ nav .main .right{
     position: relative;
     top:-1.0em;
     left: 0.8em;
+    font-family: 'Open Sans', sans-serif;
 }
 .vendorImage{
     width: 47px;
@@ -583,8 +587,18 @@ nav .main .right{
     top:1.35em;
     left: 1.7em; 
 }
-
-
+#notification-content ul h1{
+    position: fixed;
+    height: 40px;
+    padding-right: 15em;
+    top: 4em;
+    margin-left: -0.4em;
+    padding-left: 10px;
+    padding-top: 15px;
+    color: grey;
+    background-color: #f2f2f2;
+    z-index: 777;
+}
 }
 
 </style>
