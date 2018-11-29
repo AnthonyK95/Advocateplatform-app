@@ -565,7 +565,7 @@ nav .main .right{
 #notification-content ul li h2{
     margin-left: 2em;
     text-align: center;
-    font-size: 19px;
+    font-size: 17px;
     font-family: 'Open Sans', sans-serif;
     position: relative;
     top: -1.3em;
