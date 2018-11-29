@@ -5,12 +5,28 @@
         <div class="notificationImage"></div>
         <div class="sub-container">
         <ul class="main">
-            <li class="left"  @click="logout()">My Devices</li>
-            <li class="right" @click="showModal('settings')"><div class="userImage"></div></li>
-            <li class="right"><div id="notificationImage" class="notificationImage"></div></li>
+            <li class="left">My Devices</li>
+            <li class="right" @click="enableDrop('user')"><div class="userImage"></div></li>
+            <li class="right" @click="enableDrop('notification')"><div id="notificationImage" class="notificationImage">
+                <div v-if="notification_counter" class="notify_count">{{notification_counter}}</div>  
+            </div></li>
             <li class="right" @click="showModal('newDevice')"><div id="addDevice" class="addDevice"></div></li>
             <li class="right"><input type="text" class="search" placeholder="Search Device"/></li>
         </ul>
+         <div id="dropdown-content" @mouseleave="disableDrop()">
+              <h4 class="h4">profile</h4>
+              <h4 class="h4" @click="showModal('settings')">Settings</h4>
+              <h4 class="h4" @click="logout()">Logout</h4>
+         </div>
+          <div id="notification-content" @mouseleave="disableDrop()">
+              <ul class="contracts">
+                  <li v-for="notify in notification_content" :key="notify._id">
+                      <div class="vendorImage"></div><!-- Will show the image of the vendor TODO: -->
+                      <h2>{{notify.deviceVendor}} has a contract ready for you</h2>
+                      <h3>{{notify.deviceName}} is ready for review</h3>
+                  </li>
+              </ul>
+         </div>
         </div>
         </nav>
        <!-- Mobile Menu -->
@@ -64,7 +80,9 @@ export default {
             isModalVisible:false,
             status:'false',
             componentName:'',
-            props:''
+            props:'',
+            notification_counter:'',
+            notification_content:''
         }
     },
     components:{
@@ -83,6 +101,16 @@ export default {
     // Closing the modal -> action
     thecloseModal:function(variable){
       this.status = variable;
+    },
+    enableDrop:function(view){
+        let menu = document.getElementById('dropdown-content');
+        let notification = document.getElementById('notification-content');
+        if(view === 'user'){menu.style.display = 'block';notification.style.display='none';}
+        if(view === 'notification'){notification.style.display = 'block';menu.style.display='none';}
+    },
+    disableDrop:function(){
+        let menu = document.getElementById('dropdown-content').style.display='none';
+        let notification = document.getElementById('notification-content').style.display='none';
     },
     logout:function(){
       localStorage.removeItem('token');
@@ -105,6 +133,23 @@ export default {
         console.log(error);
      })
     },
+     notificationBadge:function(){
+      axios.post('http://46.103.120.51:1540/api/dashboard/notification',localStorage.getItem('token'))
+      .then(response =>{
+        if(response === null){
+          console.log('null');
+        }
+        else{
+          this.notification_content = response.data.notification;
+          console.log(response.data.notification);
+          this.notification_counter = response.data.notification_counter;
+        }
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
     dashboardValidation:function(){
       axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
         axios.post('http://46.103.120.51:1540/api/validation',localStorage.getItem('token'))
@@ -124,10 +169,10 @@ export default {
         })
     },     
 },
-mounted(){this.requestDevices();},
-    created(){
+mounted(){this.requestDevices();this.notificationBadge();},
+created(){
     this.dashboardValidation();
-    },
+ },
 }
 </script>
 
@@ -273,8 +318,8 @@ nav ul{display: none;}
     /* margin-left: 4em; */
     margin-left: 16%;
 }
-
-
+#dropdown-content {display: none;}
+#notification-content{display: none;}
 /*----------------------Desktop Version*/
 @media only screen and (min-width: 1200px) {
 .navbar{display: none;} nav img{display: none;} nav .logo{display:none;}.sub-container{width: 70%;text-align: center;margin:auto;}
@@ -357,7 +402,6 @@ nav .main .right{
   outline:none;
   border:none;
   background-color:#f2f2f2;
-  /* border:1px solid lightgrey; */
   color:#2741C8;
   background-image: url(../assets/Icon/search.svg);
   background-position: 12px 7px;
@@ -371,12 +415,14 @@ nav .main .right{
   margin-top: 10em;
   margin-bottom: 5em;
 }
+
 #devices ul{
   width: 100%;
   text-align: center;
   list-style: none;
   margin-top: -20px;
 }
+
 #devices ul li{
   display: inline-block;
   margin-top: 100px;
@@ -387,7 +433,8 @@ nav .main .right{
   font-stretch: extra-condensed;
   height: 180px;
   width: 250px;
-  background-color:#2741C8;
+  /* background-color:#2741C8; */
+  background-color: #385d8b;
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
@@ -397,7 +444,8 @@ nav .main .right{
     color: white;
     text-align: center;
     position: absolute;
-    margin-left: 1em;margin-top: 1em;
+    margin-left: 1em;
+    margin-top: 1em;
 }
 
 #devices ul li h4{
@@ -419,14 +467,122 @@ nav .main .right{
 
 .nodevice{margin-left: 0%;}
 .theimg{margin-left:0px;}
+.notify_count{
+  width: 17px;
+  text-align: center;
+  border:none;
+  border-radius: 20px;
+  background-color: black;
+  margin-left:2em;
+  color: white;
+  font-size: 14px;
+  /* padding-bottom: 0.2em; */
+  /* padding-right: 0.05em; */
+  padding-right: 0.05em;
+  padding-top: 0.05em;
+}
 
 
 
+/*Dropdown Modal*/
+
+#dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 250px;
+    top: 5.5em;
+    right: 10%;
+    border:1px solid #f2f2f2;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.12);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 5px;
+}
+#dropdown-content .h4{
+  text-align: center;
+  margin-top: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom:0.5em;
+  margin-bottom: 1.5em;
+  font-weight: 700;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12pt;
+  color: black;
+  cursor: pointer;
+}
+
+#notification-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 450px;
+    height: 300px;
+    top: 6em;
+    border:1px solid #f2f2ff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.12);
+    padding-left: 0.5em;
+    padding-right: 1em;
+    padding-bottom: 1.2em;
+    padding-top: 0.7em;
+    z-index: 1;
+    right: 15%;
+    border-radius: 5px;
+    text-align:center;
+    overflow-x: hidden;
+}
+.contracts{
+    display: block;
+}
+
+ .notification_label{
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    color: white;
+    position: fixed;
+    top:6.7em;
+    left: -0.5em;
+    z-index: 7;
+}
 
 
-
-
-
+#notification-content ul{display: block;width: 100%;margin-top: 10px;}
+#notification-content ul li{
+    list-style: none;
+    width: 100%;
+    margin-left: 4.5px;
+    height:auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#notification-content ul li:hover{
+    background-color:#f2f2f2;
+    border-radius: 5px;
+}
+#notification-content ul li h2{
+    margin-left: 2em;
+    text-align: center;
+    font-size: 19px;
+    position: relative;
+    top: -1.3em;
+}
+#notification-content ul li h3{
+    text-align:center;
+    font-size: 15px;
+    position: relative;
+    top:-1.0em;
+    left: 0.8em;
+}
+.vendorImage{
+    width: 47px;
+    position: relative;
+    height: 47px;
+    background-color: black;
+    border-radius: 100px;
+    top:1.35em;
+    left: 1.7em; 
+}
 
 
 }

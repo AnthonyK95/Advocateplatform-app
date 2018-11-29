@@ -69,7 +69,7 @@ app.post('/api/register', async(req,res)=>{
     });
     // Creating the token with users credentials
     const token = requested_token.signtoken(newuser._id,newuser.email);
-     // Saving to the database
+    // Saving to the database
     await newuser.save();
     res.status(200).json(token);
  });
@@ -90,7 +90,6 @@ app.use('/api/validation',Token_authentication,(req,res)=>{
 app.use('/api/devices',Token_authentication,(req,res)=>{
     //Sending the list of devices
       Device.find({assignedUser:req.userID},(err,data)=>{
-          console.log(data);
         res.status(200).json({response:data});
     });
 });
@@ -132,7 +131,7 @@ app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
                     console.log(err)
                 }
                 else{
-                    res.status(200).json({message:'success'})
+                    res.status(200).json({message:'success'});
                 }
             })
         }

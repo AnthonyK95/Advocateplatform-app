@@ -100,7 +100,8 @@ form [type = "submit"]{
 #box{
     width: 100%;
     text-align: center;
-    margin-top: 2em;
+    margin-top: 0em;
+    margin-left: -0.2em;
     margin-bottom: 2em;
 }
 #box form{
@@ -112,7 +113,6 @@ form [type = "submit"]{
     padding-bottom: 50px;
     margin:auto;
     border-radius: 10px;
-    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4); */
     background-color: white;
 }
 
