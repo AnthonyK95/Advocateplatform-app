@@ -101,15 +101,15 @@ hr{
     left: 2.5em;
     top: 1em;
     width: 85%;
-    height: 47px;
+    height: 50px;
     background-color: #f2f2f2;
     border-radius: 5px;
     right: 2em;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.07);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
     cursor: pointer;
 }
 .main-elements ul li h2{
-    padding-top: 0.4em;
+    padding-top: 0.5em;
     padding-left: 1em;
     color: grey;
     position: relative;
