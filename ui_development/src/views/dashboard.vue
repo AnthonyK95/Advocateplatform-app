@@ -21,7 +21,7 @@
           <div id="notification-content" @mouseleave="disableDrop()">
               <ul class="contracts">
                   <h1>Notifications</h1>
-                  <li v-for="notify in notification_content" :key="notify._id">
+                  <li @click="showModal('consent',notify._id)" v-for="notify in notification_content" :key="notify._id">
                       <div class="vendorImage"></div><!-- Will show the image of the vendor TODO: -->
                       <h2>{{notify.deviceVendor}} has a contract ready for you</h2>
                       <h3>{{notify.deviceName}} is ready for review</h3>
@@ -32,7 +32,7 @@
         </nav>
        <!-- Mobile Menu -->
        <div id="navbar" class="navbar">
-           <a href="javascript:void(0)" class="closebtn" @click="closeNavigation()">&times;</a>
+            <a href="javascript:void(0)" class="closebtn" @click="closeNavigation()">&times;</a>
             <a>Profile</a>
             <a>Settings</a>
             <a @click="logout()">Logout</a>
@@ -70,6 +70,7 @@ import store from '../store/store';
 import settings from '../components/settings';
 import devprops from '../components/devprops';
 import newDevice from '../components/newDevice';
+import consent from '../components/consent';
 import modal from '../components/modal';
 
 
@@ -83,7 +84,7 @@ export default {
             componentName:'',
             props:'',
             notification_counter:'',
-            notification_content:''
+            notification_content:'',
         }
     },
     components:{
@@ -92,9 +93,10 @@ export default {
    methods:{
     showModal(template,properties) {
        this.isModalVisible = true;
-       if(template == 'settings'){this.componentName = settings;}
-       if(template == 'devprops'){this.componentName = devprops;this.props = properties;}
-       if(template == 'newDevice'){this.componentName = newDevice;}
+       if(template == 'settings'){this.componentName = settings;this.deleteDevice = false;}
+       if(template == 'devprops'){this.componentName = devprops;this.props = properties;this.deleteDevice = true;}
+       if(template == 'newDevice'){this.componentName = newDevice;this.deleteDevice = false;}
+       if(template == 'consent'){this.componentName = consent;this.deleteDevice = false;this.props = properties;}
     },
     closeModal() {
       this.isModalVisible = false;
@@ -126,7 +128,7 @@ export default {
     },
     // Requesting data from the server
     requestDevices:function(){
-      axios.post('http://46.103.120.51:1540/api/devices',localStorage.getItem('token'))
+      axios.post('http://46.103.120.51:8080/api/devices',localStorage.getItem('token'))
       .then(response => {
         this.devices = response.data.response;
     })
@@ -134,8 +136,8 @@ export default {
         console.log(error);
      })
     },
-     notificationBadge:function(){
-      axios.post('http://46.103.120.51:1540/api/dashboard/notification',localStorage.getItem('token'))
+    notificationBadge:function(){
+      axios.post('http://46.103.120.51:8080/api/dashboard/notification',localStorage.getItem('token'))
       .then(response =>{
         if(response === null){
           console.log('null');
@@ -153,7 +155,7 @@ export default {
     },
     dashboardValidation:function(){
       axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
-        axios.post('http://46.103.120.51:1540/api/validation',localStorage.getItem('token'))
+        axios.post('http://46.103.120.51:8080/api/validation',localStorage.getItem('token'))
         .then(response => {
             if(response.data == "Expired"){
               console.log('Token has been expired');
@@ -280,7 +282,7 @@ nav ul{display: none;}
   font-stretch: extra-condensed;
   height: 180px;
   width: 360px;
-  background-color:#2741C8;
+  background-color:#003366;
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
@@ -319,6 +321,7 @@ nav ul{display: none;}
     /* margin-left: 4em; */
     margin-left: 16%;
 }
+.deleteDevice{display: none;}
 #dropdown-content {display: none;}
 #notification-content{display: none;}
 /*----------------------Desktop Version*/
@@ -355,9 +358,10 @@ nav .main li{
 nav .main .left{
     font-size: 25px;
     /* font-family: 'Roboto', sans-serif; */
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 500;
     margin-top: 1.8em;
+    cursor:default;
 }
 nav .main .right{
     float: right;
@@ -443,7 +447,7 @@ nav .main .right{
   height: 180px;
   width: 250px;
   /* background-color:#2741C8; */
-  background-color: #385d8b;
+  background-color: #003366;
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
@@ -599,6 +603,22 @@ nav .main .right{
     background-color: #f2f2f2;
     z-index: 777;
 }
+.deleteDevice{
+    width: 100px;
+    height: 35px;
+    background-color: red;
+    color: white;
+    border:none;
+    border-radius:5px;
+    margin-top: 1.3em;
+    margin-left: 1em;
+    cursor: pointer;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.25);
+    outline:none;
+    display: block;
+}
+
+
 }
 
 </style>

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-//Creating the user schema
+//Creating the Device Schema
 var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     deviceVendor: String,
@@ -8,7 +8,8 @@ var userSchema = new mongoose.Schema({
     deviceType:String,
     deviceSerialKey:String,
     assignedUser: String,
-    blockchainID:String
+    blockchainID:String,
+    activeContract:String
 });
 
 //Export the user model to the project

@@ -5,11 +5,12 @@
       <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header" id="modalTitle">
           <slot name="header">
-            <span class="closebutton" @click="close()">&times;</span>
+            <slot name="deleteDevice"></slot>
+            <span class="closebutton" @click="close">&times;</span>
           </slot>
         </header>
         <section class="modal-body" id="modalDescription">
-            <!-- Displaying the  -->
+          <!-- Displaying the  -->
           <slot name="componentName"></slot>
         </section>
       </div>
@@ -20,13 +21,11 @@
 <script>
   export default {
     name: 'modal',
-    data(){
-        return{
-            
-        }
-    },
     mounted(){this.escModal();},
     methods: {
+      menu:function(){
+        console.log('hello');
+      },
       // Closing the menu on escape
       escModal:function(){
         document.body.addEventListener('keyup', e => {
@@ -43,6 +42,7 @@
 
 
 <style>
+
   .modal-backdrop {
     position: fixed;
     top: -10px;
@@ -57,19 +57,23 @@
   }
 
   .modal {
-    background: #FFFFFF;
+    background: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
     overflow-x: auto;
     width: 60%;
+    height: auto;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+
   }
 
   .modal-header,
   .modal-footer {
-    padding: 15px;
+    padding: 7px;
+    margin-left: 0.5em;
     display: flex;
+    flex-grow:initial;
   }
 
   .modal-header {
@@ -77,28 +81,31 @@
     color: #4AAE9B;
     justify-content: space-between;
     margin-top: -1em;
+    position: relative;
+    -ms-flex-align:left;
   }
 
-  
+ 
 
   .modal-body {
     position: relative;
-    padding: 20px 10px;
+    height: auto;
   }
 
   .closebutton {
     text-align:center;
     justify-content: space-between;
-    color: #aaa;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
+    color: #000;
+    margin-top: 0.8em;
+    margin-left: 0.3em;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
+    flex: 0;
 }
   .closebutton:hover,
  .closebutton:focus {
-    color: black;
+    color: red;
     text-decoration: none;
-    cursor: pointer;
 }
 </style>

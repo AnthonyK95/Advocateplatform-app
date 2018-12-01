@@ -5,7 +5,7 @@
               <input type="text" v-model="data.deviceName" label="name" autocomplete="off" placeholder="Device Name" required><br>
               <input type="text" v-model="data.deviceType" label="type" autocomplete="off" placeholder="Device Type" required><br>
               <input type="text" v-model="data.deviceKey" label="password" placeholder="Device Type" required><br>
-              <input type="submit" value="Regster Device">
+              <input type="submit" value="Register Device">
             </form>
         </div>
     </div>
@@ -30,7 +30,7 @@ export default {
         registerDevice:function(){
             // 
             let credentials = {deviceNames: this.data.deviceName,deviceTypes:this.data.deviceType,deviceKeys:this.data.deviceKey}
-            axios.post('http://46.103.120.51:1540/api/dashboard/registerDevice',credentials,localStorage.getItem('token'))
+            axios.post('http://46.103.120.51:8080/api/dashboard/registerDevice',credentials,localStorage.getItem('token'))
             .then(response => {
                 console.log('success device registration');
             })

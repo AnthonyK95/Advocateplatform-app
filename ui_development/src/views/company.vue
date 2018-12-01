@@ -42,7 +42,7 @@ export default {
   methods:{
     createContract:function(variable){
       this.answer = true;
-      axios.post('http://46.103.120.51:1540/api/company/requestContract',{variable})
+      axios.post('http://46.103.120.51:8080/api/company/requestContract',{variable})
         .then(response => {
           console.log(response);
         })
@@ -54,7 +54,7 @@ export default {
       let code  = this.data.code;
       if(code === "123"){
         let postCodeRequest = true;
-        axios.post('http://46.103.120.51:1540/api/company/contractCreation',{postCodeRequest})
+        axios.post('http://46.103.120.51:8080/api/company/contractCreation',{postCodeRequest})
           .then(response => {
             this.devicess = true;
             this.answer = '';

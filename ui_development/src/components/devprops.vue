@@ -1,6 +1,21 @@
 <template>
     <div class="container">
-        <h1>Device Properties</h1>
+       <!-- <div slot="deleteDevice" class="deleteDevice">Delete</div> -->
+        <!-- Header Section for the information -->
+        <section class="header">
+            <ul>
+                <li>Device</li>
+                <li>127.0.0.1</li>
+            </ul>
+        </section>
+        <div class="center-card">
+            <ul>
+                <li><h1>Active Contract &nbsp;&nbsp;{{activeContract}}</h1></li>
+                <li><button @click="modify('contract')">Modify</button></li>
+                
+            </ul>
+            
+        </div><hr>
         <div class="main-elements">
             <ul>
                 <li v-for="props in deviceprops" :key="props._id">
@@ -10,10 +25,73 @@
         </div>
     </div>
 </template>
+
+
+
 <style scoped>
 .container{
-    width: 95;
+    width: 100%;
     margin:auto;
+    background-color: white;
+}
+.header{
+    width: 100%;
+    margin:auto;
+    height: 10vh;
+}
+.header ul{list-style: none;}
+.header ul li{
+    display: inline;
+    position: relative;
+    left: 2em;  
+    top: 1.2em;
+    margin:10px;
+    margin-left: 5px;
+    font-size: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color:grey;
+}
+.center-card{
+    display: inline-table;
+    width: 100%;
+    float: right;
+    position: relative;
+    left: 2.6em;
+    color: grey;
+    left: 2em;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+hr{
+    position: relative;
+    top: 1em;
+    width: 85%;
+    left:2.5em;
+}
+.center-card ul{list-style:none;}
+.center-card ul li{display: inline-block;}
+.center-card h1{
+    position: relative;
+    left:0.5em;
+    font-weight: normal;
+}
+.center-card button{
+    width: 100px;
+    height: 34px;
+    position: relative;
+    left: 2.0em;
+    top:-0.3em;
+    border:none;
+    color: grey;
+    border-radius: 5px;
+    outline:none;
+    cursor: pointer;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.10);
+}
+.main-elements{
+    position: relative;
+    top: 2em;
+    width: 100%;
+    height: 40vh;
 }
 </style>
 
@@ -25,24 +103,43 @@ export default {
     props:['properties'],
     data(){
         return{
-            deviceprops:''
+            deviceprops:'',
+            deleteDevice:true,
+            ip:'127.0.0.1',
+            deviceVendor:'',
+            activeContract:'1d67dsa5f67as'
         }
     },
     methods:{
-        requireProperties:function(){
+        modify:function(contractID){
+            console.log(contractID);
+        },
+        deleteDev:function(){
             let deviceID = this.properties;
-            axios.post('http://46.103.120.51:1540/api/device/properties',{deviceID},localStorage.getItem('token'))
+            axios.post('http://46.103.120.51:8080/api/dashboard/devices/delete',{deviceID},localStorage.getItem('token'))
+            .then(response => {
+               if(response.data.message == 'success'){
+                   location.reload();
+               }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        requireContracts:function(){
+            let deviceID = this.properties;
+            axios.post('http://46.103.120.51:8080/api/device/properties',{deviceID},localStorage.getItem('token'))
             .then(response => {
                 this.deviceprops = response.data;
-                console.log(response);
-           })
+                this.deviceVendor = response.data.properties.deviceVendor;
+            })
             .catch(error => {
                 console.log(error);
            })
         },
     },
     created(){
-        this.requireProperties();
+        this.requireContracts();
     }
 }
 </script>

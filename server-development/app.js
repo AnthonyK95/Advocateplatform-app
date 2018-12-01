@@ -19,6 +19,7 @@ require('dotenv').config();
 let User = require('./models/users');
 let Device = require('./models/device');
 let Contract = require('./models/contract');
+let ConfirmedContract = require('./models/confirmedContract');
 
 //Setting Mongoose and choosing database
 mongoose.connect('mongodb://localhost:27017/ADvoCate', { useNewUrlParser: true });
@@ -112,23 +113,22 @@ app.use('/api/device/update',Token_authentication,(req,res)=>{
         }
         else{
             Contract.findOneAndUpdate({assignedUser:req.userID},{deviceName:req.body.updateInfo.deviceName,deviceType:req.body.updateInfo.deviceType})
-            res.status(200).json({message:'success'})
+            res.status(200).json({message:'success'});
         }
     });
 });
 
 //FIXME: deleting the devices -> deviceID
 app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
-    let deviceID = req.body.configuration.device
-    let deviceSerialKey = req.body.configuration.serialKey
+    let deviceID = req.body.deviceID
     Device.findOneAndRemove({_id:deviceID},(err,response)=>{
         if(err){
-            console.log(err)
+            console.log(err);
         }
         else{
-            Contract.findOneAndDelete({deviceSerialKey:deviceSerialKey},(err,response)=>{
+            Contract.findOneAndDelete({assignedUser:deviceID},(err,response)=>{
                 if(err){
-                    console.log(err)
+                    console.log(err);
                 }
                 else{
                     res.status(200).json({message:'success'});
@@ -138,14 +138,29 @@ app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
     })
 });
 
-// FIXME: notification System
+
+// Preview the history of the Contracts -> Active
+app.use('/api/dashboard/contractHistory',Token_authentication,(req,res)=>{
+    ConfirmedContract.find({assignedUser:req.userID},(err,responde_contracts)=>{
+        if(error) throw error;
+        else{
+            console.log(error);
+        }
+    });
+});
+
+
+
+
+
+// FIXME: Notification System
 app.use('/api/dashboard/notification',Token_authentication,(req,res)=>{
     Contract.find({assignedUser:req.userID,status:"pending"},(err,dataController)=>{
        if(err){
-           console.log(err)
+           console.log(err);
        }
        else{
-           res.status(200).json({notification:dataController,notification_counter:dataController.length})
+           res.status(200).json({notification:dataController,notification_counter:dataController.length});
        }
     })
 });
@@ -156,7 +171,7 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
     //Requesting the data from the user  
     const dataForWriting = new Device({
         _id:new mongoose.Types.ObjectId(),
-        deviceVendor:'device',
+        deviceVendor:'samsung',
         deviceName: req.body.deviceNames,
         deviceType: req.body.deviceTypes,
         deviceSerialKey: req.body.deviceKeys,
@@ -167,25 +182,27 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
     res.status(200).json({correct:'correct'});
 });
 
-// aquire the data from db and send them back
+// aquire the contract information with the exact -> id 
 app.use('/api/dashboard/reqcontractConsent',Token_authentication,(req,res)=>{
     let contractID = req.body.IDcontract
     Contract.findOne({_id:contractID},(err,response)=>{
-        res.status(200).json({information:response})
+        res.status(200).json({information:response});
     })
 })
 
 
 // TODO: create will all the data that we have the confirmed contract
 app.use('/api/dashboard/postcontractConsent',Token_authentication,(req,res)=>{
+    // Array with the data that has been accepted by the user
     let confirmed =  req.body.confirmed
     let contractId = req.body.contractID
     console.log(confirmed)
-    Contract.findOneAndUpdate({_id:contractId},{Client_Consent:confirmed,status:'confirmed'},(err,response)=>{
+    Contract.findOneAndUpdate({_id:contractId},{Client_Consent:confirmed,status:'Confirmed'},(err,response)=>{
       if(err){
           throw err;
-      }else{
-        // Create the hash from the response data
+      }
+      else{
+        // Create the hash from the response data array
         let to_hash = JSON.stringify(response)
         let hash = crypto.createHash('sha256').update(to_hash).digest('hex');
         Contract.findOneAndUpdate({_id:contractId},{Client_Signature:hash},(err,contract_response)=>{
@@ -193,20 +210,21 @@ app.use('/api/dashboard/postcontractConsent',Token_authentication,(req,res)=>{
                 throw err;
             }
             else{
-                res.status(200).json({message:'success'})
-            }
+                Device.find({},(err,response)=>{
+                    res.status(200).json({message:'success'});
+                });
+              }
           })
       }})    
 });
 
 
-// TODO: no need to authenticate the token
+// TODO: no need to authenticate with token
 //Temporary API for sending the devices to the vendor-> Requesting the devices to show from the contacts
 app.use('/api/company/contractCreation',(req,res)=>{
  let code = req.body.postCodeRequest;
-
      if(code === true) {
-         Device.find({deviceVendor:"device"},(err,dataController)=>{
+         Device.find({deviceVendor:"samsung"},(err,dataController)=>{
             if(err){
                 console.log(err);
             }
@@ -218,16 +236,17 @@ app.use('/api/company/contractCreation',(req,res)=>{
      }
 });
 
-// TODO: temporary creating contract until the final build
-// TODO: no need to authenticate the token
-//Temporary API to create the contract and save it to database Contracts
+// Requesting the data from the server to compose the json info
+// Sending the information with contract id for response -> sign contract
 app.use('/api/company/requestContract',(req,res)=>{
+
     let contractId = req.body.variable;
     Device.findOne({_id:contractId},(err,dataController)=>{
         //Creating the contract
         let requestedContract = new Contract({
             _id:new mongoose.Types.ObjectId(),
             status:"pending",
+            deviceID:dataController._id,
             deviceVendor: dataController.deviceVendor,
             deviceName: dataController.deviceName,
             deviceType:dataController.deviceType,
@@ -249,9 +268,9 @@ app.use('/api/company/requestContract',(req,res)=>{
             Profiling:true,
             Manual_Process:true
         });
-
+        
         //Temporary Code
-        let to_hash = requestedContract._id+requestedContract.status+requestedContract.deviceVendor+requestedContract.deviceName
+        let to_hash =requestedContract.deviceID+requestedContract._id+requestedContract.status+requestedContract.deviceVendor+requestedContract.deviceName
             +requestedContract.deviceType+requestedContract.deviceSerialKey+requestedContract.assignedUser+requestedContract.data.Data_Requested_One
             +requestedContract.data.Data_Requested_Two+requestedContract.Time_Period+requestedContract.Purposes_One+requestedContract.Purposes_Two
             +requestedContract.Third_Countries+requestedContract.Third_Parties+requestedContract.Automated_Processing+requestedContract.Profiling+requestedContract.Manual_Process;
@@ -297,6 +316,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 
 // Server Initialization -> Properties Configured by the host.env file
-app.listen(1540, '0.0.0.0',() => console.log('Application is running'));
+app.listen(8080, '0.0.0.0',() => console.log('Application is running'));
 
 module.exports = app;

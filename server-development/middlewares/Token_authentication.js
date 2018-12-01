@@ -16,7 +16,7 @@ module.exports = (req,res,next)=> {
         else{
             // Returning the data to the request
             req.userID = decoded_token.sub
-            next()
+            next();
         }
     }
     catch(error){

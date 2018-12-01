@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 
-//Creating the user schema
+//Creating the Contract Schema
 var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     status:String,
+    deviceID:String,
     deviceVendor: String,
     deviceName: String,
     deviceType:String,
