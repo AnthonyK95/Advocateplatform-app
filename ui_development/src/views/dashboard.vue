@@ -275,17 +275,18 @@ nav ul{display: none;}
 #devices ul li{
   display: inline-block;
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 52.5px;
   cursor: pointer;
   font-family: 'PT Sans', sans-serif;
   font-weight: bold;
   font-stretch: extra-condensed;
   height: 180px;
-  width: 360px;
+  width: 90%;
   background-color:#003366;
   border-radius: 6px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
   color: white;
+  outline:none;
 }
 
 
@@ -299,8 +300,8 @@ nav ul{display: none;}
 }
 
 #devices ul li h4{
+    margin-left: -70%;
     margin-top: 8em;
-    margin-left: -16em;
     position: relative;;
 }
 
@@ -318,12 +319,19 @@ nav ul{display: none;}
   color: darkgrey;
 }
 .theimg{
-    /* margin-left: 4em; */
     margin-left: 16%;
 }
 .deleteDevice{display: none;}
 #dropdown-content {display: none;}
 #notification-content{display: none;}
+
+@media only screen and (max-width: 300px) {
+#devices ul li h4{
+    margin-top: 8em;
+    margin-left: -60%;
+    position: relative;
+}
+}
 /*----------------------Desktop Version*/
 @media only screen and (min-width: 1200px) {
 .navbar{display: none;} nav img{display: none;} nav .logo{display:none;}.sub-container{width: 70%;text-align: center;margin:auto;}

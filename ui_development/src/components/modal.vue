@@ -43,6 +43,57 @@
 
 <style>
 
+
+
+.modal-backdrop{
+    position: absolute;
+    top: 0;
+    z-index:777;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color:white;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+.modal{
+  overflow-y: hidden;
+  width: 100%;
+}
+  .modal-header,
+  .modal-footer {
+    padding: 7px;
+    margin-left: 0.5em;
+    display: flex;
+    flex-grow:initial;
+  }
+ .modal-body {
+    position: relative;
+    /* height: auto; */
+    overflow: hidden;
+  }
+
+  .closebutton {
+    text-align:center;
+    justify-content: space-between;
+    color: #000;
+    margin-top: 0.8em;
+    margin-left: 0.3em;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 0;
+}
+  .closebutton:hover,
+ .closebutton:focus {
+    color: red;
+    text-decoration: none;
+}
+
+/*Desktop Version*/ 
+@media only screen and (min-width: 1200px) {
+
   .modal-backdrop {
     position: fixed;
     top: -10px;
@@ -107,5 +158,6 @@
  .closebutton:focus {
     color: red;
     text-decoration: none;
+}
 }
 </style>
