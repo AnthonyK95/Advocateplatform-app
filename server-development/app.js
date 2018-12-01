@@ -210,7 +210,7 @@ app.use('/api/dashboard/postcontractConsent',Token_authentication,(req,res)=>{
                 throw err;
             }
             else{
-                Device.find({},(err,response)=>{
+                Device.findOneAndUpdate({_id:contract_response.deviceID},{activeContract:contract_response._id},(err,response)=>{
                     res.status(200).json({message:'success'});
                 });
               }

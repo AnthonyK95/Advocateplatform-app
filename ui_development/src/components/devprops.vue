@@ -19,7 +19,7 @@
         <div class="main-elements">
             <ul>
                 <li v-for="props in deviceprops" :key="props._id">
-                    {{props.deviceName}}
+                    <h2>{{props.deviceName}}</h2>
                 </li>
             </ul>
         </div>
@@ -63,8 +63,9 @@
 }
 hr{
     position: relative;
-    top: 1em;
+    top: 1.5em;
     width: 85%;
+    border-color: black;
     left:2.5em;
 }
 .center-card ul{list-style:none;}
@@ -89,10 +90,31 @@ hr{
 }
 .main-elements{
     position: relative;
-    top: 2em;
+    top: 3em;
     width: 100%;
     height: 40vh;
 }
+.main-elements ul{list-style:none;}
+.main-elements ul li{
+    display: block;
+    position: relative;
+    left: 2.5em;
+    top: 1em;
+    width: 85%;
+    height: 47px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    right: 2em;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.07);
+    cursor: pointer;
+}
+.main-elements ul li h2{
+    padding-top: 0.4em;
+    padding-left: 1em;
+    color: grey;
+    position: relative;
+}
+
 </style>
 
 
