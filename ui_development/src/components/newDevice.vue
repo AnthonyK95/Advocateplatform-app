@@ -26,7 +26,6 @@ export default {
         }
     },
     methods:{
-        
         registerDevice:function(){
             // 
             let credentials = {deviceNames: this.data.deviceName,deviceTypes:this.data.deviceType,deviceKeys:this.data.deviceKey}

@@ -221,9 +221,10 @@ hr{
     cursor: pointer;
 }
 .main-elements ul li h2{
-    padding-top: 0.5em;
+    padding-top:0.8em;
     padding-left: 1em;
     color: grey;
+    font-size: 18px;
     position: relative;
 }
 
