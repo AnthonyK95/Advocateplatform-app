@@ -14,8 +14,8 @@
                         <label for="agreed_on_profiling">Vendor will use your information for profiling</label><br>
                         <input type="checkbox"  value="agreed_on_manual_process" v-model="checkedInfromation" >
                         <label for="agreed_on_manual_process">Vendor will use your information for manual_process</label><br>
-                        <input type="checkbox"  value="agreed_on_time_period" v-model="checkedInfromation" >
-                        <label for="agreed_on_time_period">We are going to Collect data Until August 5 2019</label><br>
+                        <!-- <input type="checkbox"  value="agreed_on_time_period" v-model="checkedInfromation" > -->
+                        <!-- <label for="agreed_on_time_period">We are going to Collect data Until August 5 2019</label><br> -->
                         <input type="checkbox"  value="agreed_on_purpose_req_one" v-model="checkedInfromation" >
                         <label for="agreed_on_purpose_req_one">Uptime data will be used to identify potential bugs</label><br>
                         <input type="checkbox"  value="agreed_on_purpose_req_two" v-model="checkedInfromation" >
@@ -55,7 +55,7 @@ export default {
             let confirmed = [];
             let contractID = this.properties;            
             confirmed.push(this.checkedInfromation)
-            axios.post('http://localhost:8080/api/dashboard/postcontractConsent',{confirmed,contractID},localStorage.getItem('token'))
+            axios.post('http://localhost:3001/api/dashboard/postcontractConsent',{confirmed,contractID},localStorage.getItem('token'))
             .then(response => {
                if(response.data.message === 'success'){
                    location.reload()
@@ -67,7 +67,7 @@ export default {
         },
         requestingContractInformatino:function(){
             let IDcontract = this.properties;
-            axios.post('http://localhost:8080/api/dashboard/reqcontractConsent',{IDcontract},localStorage.getItem('token'))
+            axios.post('http://localhost:3001/api/dashboard/reqcontractConsent',{IDcontract},localStorage.getItem('token'))
             .then(resposne =>{
                 this.contract_information = resposne.data
                 this.deviceName = resposne.data.information.deviceName

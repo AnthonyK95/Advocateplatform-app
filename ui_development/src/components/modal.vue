@@ -25,6 +25,7 @@
     methods: {
       menu:function(){
         console.log('hello');
+        
       },
       // Closing the menu on escape
       escModal:function(){

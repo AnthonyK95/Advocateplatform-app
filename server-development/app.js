@@ -256,7 +256,7 @@ app.use('/api/company/requestContract',(req,res)=>{
                 Data_Requested_One:'Uptime data will be collected periodically',
                 Data_Requested_Two:'Location data will be collected periodically'
             },
-            Time_Period:"We are going to Collect data Until August 5 2019",
+            // Time_Period:"We are going to Collect data Until August 5 2019",
             Purposes:{
                 Purposes_Requested_One:"Uptime data will be used to identify potential bugs",
                 Purposes_Requested_Two:"Identity Verification Of User with Login Establish Geolocation",
@@ -316,6 +316,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 
 // Server Initialization -> Properties Configured by the host.env file
-app.listen(8080, '0.0.0.0',() => console.log('Application is running'));
+app.listen(3001, () => console.log('Application is running'));
 
 module.exports = app;

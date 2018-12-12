@@ -1,8 +1,8 @@
 <template>
    <div class="container">
        <nav>
-        <img src="../assets/Icon/menu.svg" @click="openNavigation()">
-        <div class="notificationImage"></div>
+        <img src="../assets/Icon/menu.svg" @click="openNavigation('menu')">
+        <div class="notificationImage" @click="openNavigation('notification')"></div>
         <div class="sub-container">
         <ul class="main">
             <li class="left">My Devices</li>
@@ -36,6 +36,15 @@
             <a>Profile</a>
             <a>Settings</a>
             <a @click="logout()">Logout</a>
+        </div>
+        <!-- Notification Tab --> -->
+         <div id="notification-navbar" class="notification-navbar">
+            <a href="javascript:void(0)" class="closebtn" @click="closeNavigation()">&times;</a>
+            <li id="notify_li" @click="showModal('consent',notify._id)" v-for="notify in notification_content" :key="notify._id">
+                      <div class="vendorImage"></div><!-- Will show the image of the vendor TODO: -->
+                      <h2>{{notify.deviceVendor}} has a contract ready for you</h2>
+                      <h3>{{notify.deviceName}} is ready for review</h3>
+             </li>
         </div>
         <!-- Listing Devices hybrid-->
         <div id="devices">
@@ -120,15 +129,17 @@ export default {
       store.commit('logoutUser');
       this.$router.push({ name: 'landing' });
     },
-    openNavigation:function(){
-      let menu = document.getElementById('navbar').style.width = '101%';
+    openNavigation:function(view){
+        if(view == 'menu'){let menu = document.getElementById('navbar').style.width = '101%';} 
+        if(view == 'notification'){let navigation = document.getElementById('notification-navbar').style.width = '101%';}
     },
     closeNavigation:function(){
       let menu = document.getElementById('navbar').style.width = '0';
+      let navigation = document.getElementById('notification-navbar').style.width = '0';
     },
     // Requesting data from the server
     requestDevices:function(){
-      axios.post('http://46.103.120.51:8080/api/devices',localStorage.getItem('token'))
+      axios.post('http://localhost:3001/api/devices',localStorage.getItem('token'))
       .then(response => {
         this.devices = response.data.response;
     })
@@ -137,7 +148,7 @@ export default {
      })
     },
     notificationBadge:function(){
-      axios.post('http://46.103.120.51:8080/api/dashboard/notification',localStorage.getItem('token'))
+      axios.post('http://localhost:3001/api/dashboard/notification',localStorage.getItem('token'))
       .then(response =>{
         if(response === null){
           console.log('null');
@@ -155,7 +166,7 @@ export default {
     },
     dashboardValidation:function(){
       axios.defaults.headers.post['Authorization'] = localStorage.getItem('token')
-        axios.post('http://46.103.120.51:8080/api/validation',localStorage.getItem('token'))
+        axios.post('http://localhost:3001/api/validation',localStorage.getItem('token'))
         .then(response => {
             if(response.data == "Expired"){
               console.log('Token has been expired');
@@ -223,6 +234,49 @@ nav ul{display: none;}
     outline:none;
     background-image: url(../assets/Icon/bell.svg);
 }
+
+.notification-navbar{
+    height: 100%;
+    width: 0;
+    top: 0;
+    position: fixed;
+    z-index: 1;
+    left: -2px;
+    float: right;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    border-left: 2px solid #000;
+    z-index:778;
+    display: block;
+}
+.notification-navbar li {
+    list-style: none;
+    text-align:center;
+}
+.notification-navbar a {
+    padding: 8px 8px 8px 32px;
+    margin-top: 55px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000;
+    display: block;
+    transition: 0.3s;
+    outline: none;
+    cursor: pointer;
+}
+
+.notification-navbar .closebtn {
+    position: absolute;
+    top: 0;
+    margin-left: -0.1em;
+    font-size: 36px;
+    margin-top: 0.1em;
+}
+
+
+
 .navbar{
     height: 100%;
     width: 0;
@@ -323,7 +377,11 @@ nav ul{display: none;}
 }
 .deleteDevice{display: none;}
 #dropdown-content {display: none;}
-#notification-content{display: none;}
+#notification-content{display: block;}
+
+
+
+
 
 @media only screen and (max-width: 300px) {
 #devices ul li h4{

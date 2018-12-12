@@ -29,7 +29,7 @@ export default {
         registerDevice:function(){
             // 
             let credentials = {deviceNames: this.data.deviceName,deviceTypes:this.data.deviceType,deviceKeys:this.data.deviceKey}
-            axios.post('http://46.103.120.51:8080/api/dashboard/registerDevice',credentials,localStorage.getItem('token'))
+            axios.post('http://localhost:3001/api/dashboard/registerDevice',credentials,localStorage.getItem('token'))
             .then(response => {
                 console.log('success device registration');
                 location.reload();

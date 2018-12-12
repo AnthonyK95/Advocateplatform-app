@@ -13,15 +13,23 @@
             <ul>
                 <li><h1>Active Contract &nbsp;&nbsp;{{activeContract}}</h1></li>
                 <li><button @click="modify('contract')">Modify</button></li>
+                 <li><button @click="modify('contract')" style="background-color:red;color:white;">Withdraw</button></li>
             </ul>
         </div><hr>
         <div class="main-elements">
             <ul>
                 <li v-for="props in deviceprops" :key="props._id">
                     <h2>{{props.deviceName}}</h2>
-                </li>
+                </li><br>
+                  <li v-for="props in deviceprops" :key="props._deviceType">
+                    <h2>{{props.deviceName}}</h2>
+                </li><br>
+                  <li v-for="props in deviceprops" :key="props.name">
+                    <h2>{{props.deviceName}}</h2>
+                </li><br><br>
             </ul>
         </div>
+        
     </div>
 </template>
 
@@ -270,7 +278,7 @@ export default {
         },
         deleteDev:function(){
             let deviceID = this.properties;
-            axios.post('http://46.103.120.51:8080/api/dashboard/devices/delete',{deviceID},localStorage.getItem('token'))
+            axios.post('http://localhost:3001/api/dashboard/devices/delete',{deviceID},localStorage.getItem('token'))
             .then(response => {
                if(response.data.message == 'success'){
                    location.reload();
@@ -282,7 +290,7 @@ export default {
         },
         requireContracts:function(){
             let deviceID = this.properties;
-            axios.post('http://46.103.120.51:8080/api/device/properties',{deviceID},localStorage.getItem('token'))
+            axios.post('http://localhost:3001/api/device/properties',{deviceID},localStorage.getItem('token'))
             .then(response => {
                 this.deviceprops = response.data;
                 this.deviceVendor = response.data.properties.deviceVendor;

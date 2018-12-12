@@ -34,7 +34,7 @@ export default {
               email: this.data.email,
               password:this.data.password
           }
-          axios.post('http://46.103.120.51:8080/api/login',credentials)
+          axios.post('http://localhost:3001/api/login',credentials)
           .then(response => {
               if(response.data == 'Authentication Failed'){
                   //activate the notifications system of the platform
