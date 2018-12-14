@@ -13,7 +13,7 @@
             <ul>
                 <li><h1>Active Contract &nbsp;&nbsp;{{activeContract}}</h1></li>
                 <li><button @click="modify('contract')">Modify</button></li>
-                 <li><button @click="modify('contract')" style="background-color:red;color:white;">Withdraw</button></li>
+                 <li><button @click="modify('contract')" class="withdraw" style="color:white;">Withdraw</button></li>
             </ul>
         </div><hr>
         <div class="main-elements">
@@ -141,7 +141,10 @@ hr{
 }
 
 
-
+.withdraw{
+    background-color: red;
+    color: white;
+}
 
 
 @media only screen and (min-width: 1200px) {
@@ -251,7 +254,20 @@ hr{
     margin:auto;
 }
 
-
+.withdraw{
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border:none;
+    right: 3em;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px 0 rgb(0, 0, 0,0.25);
+    margin:auto;
+   
+}
 
 }
 
