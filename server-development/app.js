@@ -316,6 +316,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
 
 
 // Server Initialization -> Properties Configured by the host.env file
-app.listen(3001, () => console.log('Application is running'));
+app.listen(3000, () => console.log('Application is running'));
 
 module.exports = app;
