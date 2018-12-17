@@ -269,7 +269,7 @@ app.use('/api/company/requestContract',(req,res)=>{
             Manual_Process:true
         });
         
-        //Temporary Code
+        //Temporary Code -> Creating the hash string
         let to_hash =requestedContract.deviceID+requestedContract._id+requestedContract.status+requestedContract.deviceVendor+requestedContract.deviceName
             +requestedContract.deviceType+requestedContract.deviceSerialKey+requestedContract.assignedUser+requestedContract.data.Data_Requested_One
             +requestedContract.data.Data_Requested_Two+requestedContract.Time_Period+requestedContract.Purposes_One+requestedContract.Purposes_Two
