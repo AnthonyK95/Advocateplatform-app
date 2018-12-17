@@ -107,6 +107,7 @@ export default {
        if(template == 'newDevice'){this.componentName = newDevice;this.deleteDevice = false;}
        if(template == 'consent'){this.componentName = consent;this.deleteDevice = false;this.props = properties;}
     },
+    // Deactivating the visibility 
     closeModal() {
       this.isModalVisible = false;
     },
