@@ -139,7 +139,7 @@ app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
 });
 
 
-// Preview the history of the Contracts -> Active
+// Preview the history of the Contracts -> Active TODO: dont know if it works
 app.use('/api/dashboard/contractHistory',Token_authentication,(req,res)=>{
     ConfirmedContract.find({assignedUser:req.userID},(err,responde_contracts)=>{
         if(error) throw error;
@@ -150,7 +150,10 @@ app.use('/api/dashboard/contractHistory',Token_authentication,(req,res)=>{
 });
 
 
+//TODO:Searching for the active contract informations
+app.use('/api/devprops/activeContract',Token_authentication,(req,res)=>{
 
+})
 
 
 // FIXME: Notification System
@@ -285,7 +288,7 @@ app.use('/api/company/requestContract',(req,res)=>{
 
 
 
-// FIXME: General Components Build -> Informations Only -> Counting the devices
+// FIXME: General Components Build -> Informations Only -> Counting the devices->Not used
 app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
     let devices;
     let contracts;
