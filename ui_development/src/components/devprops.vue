@@ -215,7 +215,6 @@ hr{
     position: relative;
     top: 3em;
     width: 100%;
-    height: 40vh;
 }
 .main-elements ul{list-style:none;}
 .main-elements ul li{

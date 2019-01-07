@@ -71,7 +71,7 @@
   }
  .modal-body {
     position: relative;
-    /* height: auto; */
+    height: auto;
     overflow: hidden;
   }
 
@@ -117,6 +117,7 @@
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
 
   }
 
@@ -132,16 +133,15 @@
     /* border-bottom: 1px solid #eeeeee; */
     color: #4AAE9B;
     justify-content: space-between;
-    margin-top: -1em;
     position: relative;
     -ms-flex-align:left;
   }
 
- 
 
   .modal-body {
     position: relative;
-    height: auto;
+    height:90vh;
+    margin-bottom: 30px;
   }
 
   .closebutton {
