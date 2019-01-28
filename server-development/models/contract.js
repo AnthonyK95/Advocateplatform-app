@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-//Creating the Contract Schema
+//Creating the Contract Schematics
 var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     status:String,
