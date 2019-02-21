@@ -53,6 +53,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    margin-top: -5em;
     background-color:white;
     justify-content: center;
     align-items: center;
@@ -71,7 +72,7 @@
   }
  .modal-body {
     position: relative;
-    height: auto;
+    height: 50vh;
     overflow: hidden;
   }
 
@@ -107,6 +108,11 @@
     justify-content: center;
     align-items: center;
   }
+  .modal-body {
+    position: relative;
+    height: 30vh;
+    overflow: hidden;
+  }
 
   .modal {
     background: white;
@@ -140,7 +146,7 @@
 
   .modal-body {
     position: relative;
-    height:90vh;
+    height:50vh;
     margin-bottom: 30px;
   }
 

@@ -22,7 +22,7 @@ let Contract = require('./models/contract');
 let ConfirmedContract = require('./models/confirmedContract');
 
 //Setting Mongoose and choosing database => Remote Connection to the vm server
-mongoose.connect('mongodb://192.168.10.10:27017/ADvoCate', { useNewUrlParser: true });
+mongoose.connect('mongodb://192.168.10.13:27017/ADvoCate', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 // Allowing Acces Control via Jwt token header method using cors
