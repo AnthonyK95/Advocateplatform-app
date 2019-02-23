@@ -22,7 +22,7 @@ let Contract = require('./models/contract');
 let ConfirmedContract = require('./models/confirmedContract');
 
 //Setting Mongoose and choosing database => Remote Connection to the vm server
-mongoose.connect('mongodb://192.168.10.13:27017/ADvoCate', { useNewUrlParser: true });
+mongoose.connect('mongodb://192.168.10.14:27017/ADvoCate', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 // Allowing Acces Control via Jwt token header method using cors
@@ -306,6 +306,12 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
     })
     res.status(200).json({deviceCount:this.devices,contractCount:this.contracts})
 });
+
+
+
+
+//Creating the new requests to the api => Stateless
+
 
 
 

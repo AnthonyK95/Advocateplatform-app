@@ -62,6 +62,7 @@
 .modal{
   overflow-y: hidden;
   width: 100%;
+  overflow-x:scroll; 
 }
   .modal-header,
   .modal-footer {
@@ -73,7 +74,8 @@
  .modal-body {
     position: relative;
     height: 50vh;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x:scroll; 
   }
 
   .closebutton {
@@ -148,6 +150,7 @@
     position: relative;
     height:50vh;
     margin-bottom: 30px;
+    overflow-y:scroll; 
   }
 
   .closebutton {
