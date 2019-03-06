@@ -22,7 +22,7 @@ let Contract = require('./models/contract');
 let ConfirmedContract = require('./models/confirmedContract');
 
 //Setting Mongoose and choosing database => Remote Connection to the vm server
-mongoose.connect('mongodb://192.168.10.14:27017/ADvoCate', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/ADvoCate', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 // Allowing Acces Control via Jwt token header method using cors
@@ -185,7 +185,8 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
     res.status(200).json({correct:'correct'});
 });
 
-// aquire the contract information with the exact -> id 
+// Listing the information of the Json Prototype Contract => For Signing
+// It has the information of the device => ID
 app.use('/api/dashboard/reqcontractConsent',Token_authentication,(req,res)=>{
     let contractID = req.body.IDcontract
     Contract.findOne({_id:contractID},(err,response)=>{

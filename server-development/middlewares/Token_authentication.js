@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 
-// require the key for authentication
+// Require the key for authentication
 require('dotenv').config()
 
 // Checking the authentication of Users->Token
