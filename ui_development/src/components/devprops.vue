@@ -18,8 +18,9 @@
         </div><hr>
         <div class="main-elements">
             <ul>
+                <!-- Displaying the old version of the contracts -->
                 <li class="makeChange" v-for="contract in contractHistory" :key="contract._id">
-                    <h2>{{contract.deviceID}}</h2>
+                    <h2>{{contract._id}}</h2>
                 </li>
             </ul>
         </div>
