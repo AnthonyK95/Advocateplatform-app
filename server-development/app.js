@@ -95,14 +95,6 @@ app.use('/api/devices',Token_authentication,(req,res)=>{
     });
 });
 
-// FIXME: Send the props of the devices -> User._id
-app.use('/api/device/properties',Token_authentication,(req,res)=>{
-    let deviceID = req.body.deviceID
-    Device.findOne({_id:req.body.deviceID},(err,data)=>{
-        res.status(200).json({properties:data});
-    });
-});
-
 
 // FIXME: update the devices -> userInput
 app.use('/api/device/update',Token_authentication,(req,res)=>{
@@ -118,9 +110,45 @@ app.use('/api/device/update',Token_authentication,(req,res)=>{
     });
 });
 
-//FIXME: deleting the devices -> deviceID
-app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
+//Withdrawing the Contract for the deviceID => No data can be accessed 
+app.use('/api/dashboard/devices/withdraw',Token_authentication,(req,res)=>{
+    let deviceID = req.body.deviceID;
+    Device.findOneAndUpdate({_id:deviceID},{activeContract:''},(err,response)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.status(200).json({message:"Success"});
+        }
+    })
+});
+
+
+//Displaying the Version of the contract history
+app.use('/api/dashboard/devices/contractHistory',Token_authentication,(req,res)=>{
+    let deviceID = req.body.deviceID;
+    Contract.find({deviceID:deviceID},(err,data)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.status(200).json({history:data})
+        }
+    })
+});
+
+
+// FIXME: Send the props of the devices -> User._id
+app.use('/api/device/properties',Token_authentication,(req,res)=>{
     let deviceID = req.body.deviceID
+    Device.findOne({_id:req.body.deviceID},(err,data)=>{
+        res.status(200).json({properties:data});
+    });
+});
+
+//TODO: deleting the devices -> deviceID
+app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
+    let deviceID = req.body.deviceID;
     Device.findOneAndRemove({_id:deviceID},(err,response)=>{
         if(err){
             console.log(err);
@@ -128,7 +156,7 @@ app.use('/api/dashboard/devices/delete',Token_authentication,(req,res)=>{
         else{
             Contract.findOneAndDelete({assignedUser:deviceID},(err,response)=>{
                 if(err){
-                    console.log(err);
+                    console.log(err); 
                 }
                 else{
                     res.status(200).json({message:'success'});
@@ -236,7 +264,6 @@ app.use('/api/company/contractCreation',(req,res)=>{
                 res.status(200).json({data:dataController});
             }
         });
-
      }
 });
 

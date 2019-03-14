@@ -13,20 +13,14 @@
             <ul>
                 <li><h1>Active Contract &nbsp;&nbsp;{{activeContract}}</h1></li>
                 <li><button @click="modify('contract')">Modify</button></li>
-                 <li><button @click="modify('contract')" class="withdraw" style="color:white;">Withdraw</button></li>
+                <li><button @click="withdrawDev()" class="withdraw" style="color:white;">Withdraw</button></li>
             </ul>
         </div><hr>
         <div class="main-elements">
             <ul>
-                <li v-for="props in deviceprops" :key="props._id">
-                    <h2>{{props.deviceName}}</h2>
-                </li><br>
-                  <li v-for="props in deviceprops" :key="props._deviceType">
-                    <h2>{{props.deviceName}}</h2>
-                </li><br>
-                  <li v-for="props in deviceprops" :key="props.name">
-                    <h2>{{props.deviceName}}</h2>
-                </li><br><br>
+                <li class="makeChange" v-for="contract in contractHistory" :key="contract._id">
+                    <h2>{{contract.deviceID}}</h2>
+                </li>
             </ul>
         </div>
         
@@ -34,8 +28,85 @@
 </template>
 
 
+<script>
+import axios from 'axios';
+
+export default {
+    props:['properties'],
+    data(){
+        return{
+            deviceprops:'',
+            deleteDevice:true,
+            ip:'127.0.0.1',
+            deviceVendor:'',
+            activeContract:'',
+            contractHistory:''
+        }
+    },
+    methods:{
+        withdrawDev:function(){
+            let deviceID = this.properties;
+            axios.post('http://localhost:3001/api/dashboard/devices/withdraw',{deviceID},localStorage.getItem('token'))
+           .then(response => {
+               if(response.data.message == 'Success'){
+                   console.log("Withdraw Complete");
+                   location.reload();
+               }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        contractHistorys:function(){
+              let deviceID = this.properties;
+              axios.post('http://localhost:3001/api/dashboard/devices/contractHistory',{deviceID},localStorage.getItem('token'))
+              .then(response=>{
+                this.contractHistory = response.data.history;
+                console.log(response.data.history);
+                console.log("Contract History Loaded");
+              })
+              .catch(err=>{
+                  console.log(err);
+              })
+        },
+        deleteDev:function(){
+            let deviceID = this.properties;
+            axios.post('http://localhost:3001/api/dashboard/devices/delete',{deviceID},localStorage.getItem('token'))
+            .then(response => {
+               if(response.data.message == 'success'){
+                   location.reload();
+               }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        requireContracts:function(){
+            let deviceID = this.properties;
+            axios.post('http://localhost:3001/api/device/properties',{deviceID},localStorage.getItem('token'))
+            .then(response => {
+                this.deviceprops = response.data;
+                this.deviceVendor = response.data.properties.deviceVendor;
+                this.activeContract = response.data.properties.activeContract;
+            })
+            .catch(error => {
+                console.log(error);
+           })
+        },
+    },
+    created(){
+        this.requireContracts();
+        this.contractHistorys();
+    }
+}
+</script>
+
 
 <style scoped>
+.makeChange{
+    margin-top: 15px;
+}
+
 
 .container{
     width: 100%;
@@ -224,10 +295,10 @@ hr{
     top: 1em;
     width: 85%;
     height: 50px;
-    background-color: #f2f2f2;
+    background-color: #f3f3f3;
     border-radius: 5px;
     right: 2em;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
     cursor: pointer;
 }
 .main-elements ul li h2{
@@ -272,51 +343,3 @@ hr{
 
 </style>
 
-
-<script>
-import axios from 'axios';
-
-export default {
-    props:['properties'],
-    data(){
-        return{
-            deviceprops:'',
-            deleteDevice:true,
-            ip:'127.0.0.1',
-            deviceVendor:'',
-            activeContract:'1d67dsa5f67as'
-        }
-    },
-    methods:{
-        modify:function(contractID){
-            console.log(contractID);
-        },
-        deleteDev:function(){
-            let deviceID = this.properties;
-            axios.post('http://localhost:3001/api/dashboard/devices/delete',{deviceID},localStorage.getItem('token'))
-            .then(response => {
-               if(response.data.message == 'success'){
-                   location.reload();
-               }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        },
-        requireContracts:function(){
-            let deviceID = this.properties;
-            axios.post('http://localhost:3001/api/device/properties',{deviceID},localStorage.getItem('token'))
-            .then(response => {
-                this.deviceprops = response.data;
-                this.deviceVendor = response.data.properties.deviceVendor;
-            })
-            .catch(error => {
-                console.log(error);
-           })
-        },
-    },
-    created(){
-        this.requireContracts();
-    }
-}
-</script>
