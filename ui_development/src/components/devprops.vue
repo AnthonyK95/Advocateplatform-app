@@ -336,9 +336,7 @@ hr{
     border-radius: 5px;
     box-shadow: 0px 8px 16px 0 rgb(0, 0, 0,0.25);
     margin:auto;
-   
-}
-
+  }
 }
 
 </style>
