@@ -48,7 +48,7 @@ export default {
         withdrawDev:function(){
             let deviceID = this.properties;
             axios.post('http://localhost:3001/api/dashboard/devices/withdraw',{deviceID},localStorage.getItem('token'))
-           .then(response => {
+            .then(response => {
                if(response.data.message == 'Success'){
                    console.log("Withdraw Complete");
                    location.reload();
@@ -299,7 +299,7 @@ hr{
     background-color: #f3f3f3;
     border-radius: 5px;
     right: 2em;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
     cursor: pointer;
 }
 .main-elements ul li h2{

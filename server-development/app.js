@@ -19,7 +19,7 @@ require('dotenv').config();
 let User = require('./models/users');
 let Device = require('./models/device');
 let Contract = require('./models/contract');
-let ConfirmedContract = require('./models/confirmedContract');
+let ConfirmedContract = require('./models/request');
 
 //Setting Mongoose and choosing database => Remote Connection to the vm server
 mongoose.connect('mongodb://localhost:27017/ADvoCate', { useNewUrlParser: true });
@@ -202,7 +202,7 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
     //Requesting the data from the user  
     const dataForWriting = new Device({
         _id:new mongoose.Types.ObjectId(),
-        deviceVendor:'samsung',
+        deviceVendor:'Vendor A',
         deviceName: req.body.deviceNames,
         deviceType: req.body.deviceTypes,
         deviceSerialKey: req.body.deviceKeys,
