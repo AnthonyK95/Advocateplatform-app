@@ -5,7 +5,8 @@ var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     Controller:String,
     DataSubject:{
-        firstname:String,
+        Firstname:String,
+        Age:Number
     },
     PersonalData:String,
     SensitiveData:Boolean,
@@ -13,14 +14,12 @@ var userSchema = new mongoose.Schema({
         ProcessingActivity:String,
         ProcessingMode:Boolean,
         Profiling:Boolean,
+        Retention:String,
         Recipient:{
             EURecipient:String,
             NonEURecipient:String
         }
-    }
-
-
-   
+    }   
 });
 
 //Exporting the Request Format 
