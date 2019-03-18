@@ -148,8 +148,8 @@
 
   .modal-body {
     position: relative;
-    height:50vh;
-    margin-bottom: 30px;
+    height:60vh;
+    margin-bottom: 0px;
     overflow-y:scroll; 
   }
 
