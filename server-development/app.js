@@ -20,6 +20,7 @@ let User = require('./models/users');
 let Device = require('./models/device');
 let Contract = require('./models/contract');
 let ConfirmedContract = require('./models/request');
+let request = require('./models/request');
 
 //Setting Mongoose and choosing database => Remote Connection to the vm server
 mongoose.connect('mongodb://localhost:27017/ADvoCate', { useNewUrlParser: true });
@@ -315,6 +316,39 @@ app.use('/api/company/requestContract',(req,res)=>{
 
 
 
+//Recreating the new JSON format
+//Requires the devices ID in order to build the basic contract request
+app.use('/api/company/request',Token_authentication,(req,res)=>{
+    //Getting the Device => ID
+    let contractId = req.body.variable;
+    Device.findOne({_id:contractId},(err,device)=>{
+        //Start assembling the request contract
+        let request = new request({
+            _id:new mongoose.Types.ObjectId(),
+            Status:'pending',
+            Controller:device.deviceVendor,
+            DeviceID:device._id,
+            DeviceType:device.deviceType,
+            DataSubjectID:device.assignedUser,
+            DataSubject:{Firstname:'John',Lastname:'Doe',Age:25},
+            PersonalData:'Firstname,Lastname,Age',
+            SensitiveData:false,
+            DataProcessing:{
+                ProcessingActivity:'For maintenance purposes',
+                ProcessingMode:false,
+                Profiling:false,
+                Recipient:{ EURecipient:"Company XYZ", NonEURecipient:"Company WA" }
+            }
+        });
+    });
+   
+
+});
+
+
+
+
+
 
 // FIXME: General Components Build -> Informations Only -> Counting the devices->Not used
 app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
@@ -334,11 +368,6 @@ app.use('/api/dashboard/countDevice',Token_authentication,async (req,res)=>{
     })
     res.status(200).json({deviceCount:this.devices,contractCount:this.contracts})
 });
-
-
-
-
-//Creating the new requests to the api => Stateless
 
 
 

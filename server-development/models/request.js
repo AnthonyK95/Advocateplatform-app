@@ -6,6 +6,7 @@ var userSchema = new mongoose.Schema({
     Controller:String,
     DataSubject:{
         Firstname:String,
+        Lastname:String,
         Age:Number
     },
     PersonalData:String,

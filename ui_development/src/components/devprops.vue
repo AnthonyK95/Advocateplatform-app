@@ -53,6 +53,9 @@ export default {
                    console.log("Withdraw Complete");
                    location.reload();
                }
+               else {
+                   console.log("Error Encountered");
+               }
             })
             .catch(error => {
                 console.log(error);
