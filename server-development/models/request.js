@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     Controller:String,
+    Status:String,
+    DataSubjectID:String,
     DataSubject:{
         Firstname:String,
         Lastname:String,
@@ -11,6 +13,7 @@ var userSchema = new mongoose.Schema({
     },
     PersonalData:String,
     SensitiveData:Boolean,
+    ControllerSignature:String,
     DataProcessing:{
         ProcessingActivity:String,
         ProcessingMode:Boolean,
@@ -20,7 +23,9 @@ var userSchema = new mongoose.Schema({
             EURecipient:String,
             NonEURecipient:String
         }
-    }   
+    },
+    DeviceType:String,
+    DeviceID:String, 
 });
 
 //Exporting the Request Format 

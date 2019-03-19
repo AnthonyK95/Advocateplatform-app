@@ -187,7 +187,7 @@ app.use('/api/devprops/activeContract',Token_authentication,(req,res)=>{
 
 // FIXME: Notification System
 app.use('/api/dashboard/notification',Token_authentication,(req,res)=>{
-    Contract.find({assignedUser:req.userID,status:"pending"},(err,dataController)=>{
+    request.find({DataSubjectID:req.userID,Status:"pending"},(err,dataController)=>{
        if(err){
            console.log(err);
        }
@@ -203,7 +203,7 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
     //Requesting the data from the user  
     const dataForWriting = new Device({
         _id:new mongoose.Types.ObjectId(),
-        deviceVendor:'Vendor A',
+        deviceVendor:'VendorA',
         deviceName: req.body.deviceNames,
         deviceType: req.body.deviceTypes,
         deviceSerialKey: req.body.deviceKeys,
@@ -316,14 +316,14 @@ app.use('/api/company/requestContract',(req,res)=>{
 
 
 
-//Recreating the new JSON format
+//Recreating the new JSON format V2.0
 //Requires the devices ID in order to build the basic contract request
 app.use('/api/company/request',Token_authentication,(req,res)=>{
     //Getting the Device => ID
     let contractId = req.body.variable;
     Device.findOne({_id:contractId},(err,device)=>{
         //Start assembling the request contract
-        let request = new request({
+        let requests = new request({
             _id:new mongoose.Types.ObjectId(),
             Status:'pending',
             Controller:device.deviceVendor,
@@ -333,6 +333,8 @@ app.use('/api/company/request',Token_authentication,(req,res)=>{
             DataSubject:{Firstname:'John',Lastname:'Doe',Age:25},
             PersonalData:'Firstname,Lastname,Age',
             SensitiveData:false,
+            Retention:'Data collected until August 5 2019',
+            ControllerSignature:String,
             DataProcessing:{
                 ProcessingActivity:'For maintenance purposes',
                 ProcessingMode:false,
@@ -340,6 +342,7 @@ app.use('/api/company/request',Token_authentication,(req,res)=>{
                 Recipient:{ EURecipient:"Company XYZ", NonEURecipient:"Company WA" }
             }
         });
+        requests.save();
     });
    
 

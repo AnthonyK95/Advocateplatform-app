@@ -40,9 +40,11 @@ export default {
     }
   },
   methods:{
+    //Creating the request for the specific device
     createContract:function(variable){
       this.answer = true;
-      axios.post('http://localhost:3001/api/company/requestContract',{variable})
+      // axios.post('http://localhost:3001/api/company/requestContract',{variable})
+      axios.post('http://localhost:3001/api/company/request',{variable})
         .then(response => {
           console.log(response);
         })
@@ -50,6 +52,9 @@ export default {
           console.log(err);
         })
     },
+
+
+    //Requesting the devices for the specific => Vendor Code
     requestingMyDevices:function(){
       let code  = this.data.code;
       if(code === "123"){
