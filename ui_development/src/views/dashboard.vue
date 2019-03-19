@@ -50,7 +50,7 @@
         <div id="devices">
             <div class="inside-container">
                 <ul>
-                    <li @click="showModal('devprops',devices._id)" v-if="devices" :key="devices._id" v-for="devices in devices">
+                    <li @click="showModal('devprops',devices._id)"  :key="devices._id" v-for="devices in devices">
                         <h3>{{devices.deviceName}}</h3><br>
                         <h4>127.0.0.1</h4>
                         <!-- <h2 style="margin-top:50px;font-size:15px;color:lightgrey;">Vendor: vendor1</h2> -->

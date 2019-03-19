@@ -221,7 +221,7 @@ app.use('/api/dashboard/reqcontractConsent',Token_authentication,(req,res)=>{
     Contract.findOne({_id:contractID},(err,response)=>{
         res.status(200).json({information:response});
     })
-})
+});
 
 
 // TODO: create will all the data that we have the confirmed contract
@@ -236,7 +236,7 @@ app.use('/api/dashboard/postcontractConsent',Token_authentication,(req,res)=>{
       }
       else{
         // Create the hash from the response data array
-        let to_hash = JSON.stringify(response)
+        let to_hash = JSON.stringify(response);
         let hash = crypto.createHash('sha256').update(to_hash).digest('hex');
         Contract.findOneAndUpdate({_id:contractId},{Client_Signature:hash},(err,contract_response)=>{
             if(err){
@@ -344,8 +344,6 @@ app.use('/api/company/request',Token_authentication,(req,res)=>{
         });
         requests.save();
     });
-   
-
 });
 
 

@@ -14,6 +14,7 @@ var userSchema = new mongoose.Schema({
     PersonalData:String,
     SensitiveData:Boolean,
     ControllerSignature:String,
+    SubjectSignature:String,
     DataProcessing:{
         ProcessingActivity:String,
         ProcessingMode:Boolean,

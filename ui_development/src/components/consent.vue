@@ -65,6 +65,7 @@ export default {
                 console.log(error)
             })
         },
+        //Perforfs the request to the api regarding the => Request scheme Json
         requestingContractInformatino:function(){
             let IDcontract = this.properties;
             axios.post('http://localhost:3001/api/dashboard/reqcontractConsent',{IDcontract},localStorage.getItem('token'))
