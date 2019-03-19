@@ -179,12 +179,6 @@ app.use('/api/dashboard/contractHistory',Token_authentication,(req,res)=>{
 });
 
 
-//TODO:Searching for the active contract informations
-app.use('/api/devprops/activeContract',Token_authentication,(req,res)=>{
-
-})
-
-
 // FIXME: Notification System
 app.use('/api/dashboard/notification',Token_authentication,(req,res)=>{
     request.find({DataSubjectID:req.userID,Status:"pending"},(err,dataController)=>{
@@ -218,7 +212,7 @@ app.use('/api/dashboard/registerDevice',Token_authentication,(req,res,next)=>{
 // It has the information of the device => ID
 app.use('/api/dashboard/reqcontractConsent',Token_authentication,(req,res)=>{
     let contractID = req.body.IDcontract
-    Contract.findOne({_id:contractID},(err,response)=>{
+    request.findOne({_id:contractID},(err,response)=>{
         res.status(200).json({information:response});
     })
 });

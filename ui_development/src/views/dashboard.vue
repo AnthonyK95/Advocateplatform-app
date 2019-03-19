@@ -41,9 +41,9 @@
          <div id="notification-navbar" class="notification-navbar">
             <a href="javascript:void(0)" class="closebtn" @click="closeNavigation()">&times;</a>
             <li id="notify_li" @click="showModal('consent',notify._id)" v-for="notify in notification_content" :key="notify._id">
-                      <div class="vendorImage"></div><!-- Will show the image of the vendor TODO: -->
-                      <h2>{{notify.deviceVendor}} has a contract ready for you</h2>
-                      <h3>{{notify.deviceName}} is ready for review</h3>
+                      <div class="vendorImage"></div>
+                      <h2>{{notify.Controller}} has a contract ready for you</h2>
+                      <h3>Request is ready for review</h3>
              </li>
         </div>
         <!-- Listing Devices hybrid-->
